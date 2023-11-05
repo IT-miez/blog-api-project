@@ -7,8 +7,7 @@ const UserSchema = new Schema({
   password: { type: String, required: true, maxLength: 50 },
   profilePicture: { type: String, required: false},
   profileSummary: { type: String, required: false, maxLength: 200 },
-  creationDate: new Date()
-});
+}, {timestamps: true});
 
 UserSchema.virtual("url").get(function () {
   return `/catalog/user/${this._id}`;
