@@ -8,6 +8,9 @@ const user_controller = require("../controllers/userController");
 // GET home page.
 router.get("/", user_controller.index);
 
+// Create user with unique username -route
+router.post("/user/create", user_controller.user_create_post);
 
+router.get("/user/:userid", user_controller.user_profile);
 
 module.exports = router;

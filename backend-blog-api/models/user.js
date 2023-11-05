@@ -10,7 +10,7 @@ const UserSchema = new Schema({
 }, {timestamps: true});
 
 UserSchema.virtual("url").get(function () {
-  return `/catalog/user/${this._id}`;
+  return `/users/${this._id}`;
 });
 
 UserSchema.virtual("creationDate_formatted").get(function () {

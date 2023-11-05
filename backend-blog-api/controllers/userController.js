@@ -17,128 +17,83 @@ exports.index = asyncHandler(async (req, res, next) => {
 });
 
 
-// Display list of all books.
-exports.book_list = asyncHandler(async (req, res, next) => {
-  const allBooks = await Book.find({}, "title author")
-    .sort({ title: 1 })
-    .populate("author")
-    .exec();
-
-  res.render("book_list", { title: "Book List", book_list: allBooks });
-});
-
-
-// Display detail page for a specific book.
-exports.book_detail = asyncHandler(async (req, res, next) => {
-  // Get details of books, book instances for specific book
-  const [book, bookInstances] = await Promise.all([
-    Book.findById(req.params.id).populate("author").populate("genre").exec(),
-    BookInstance.find({ book: req.params.id }).exec(),
-  ]);
-
-  if (book === null) {
-    // No results.
-    const err = new Error("Book not found");
-    err.status = 404;
-    return next(err);
-  }
-
-  res.render("book_detail", {
-    title: book.title,
-    book: book,
-    book_instances: bookInstances,
-  });
-});
-
-
-// Display book create form on GET.
-exports.book_create_get = asyncHandler(async (req, res, next) => {
-  // Get all authors and genres, which we can use for adding to our book.
-  const [allAuthors, allGenres] = await Promise.all([
-    Author.find().exec(),
-    Genre.find().exec(),
-  ]);
-
-  res.render("book_form", {
-    title: "Create Book",
-    authors: allAuthors,
-    genres: allGenres,
-  });
-});
-
 // Handle book create on POST.
-exports.book_create_post = [
-  // Convert the genre to an array.
-  (req, res, next) => {
-    if (!(req.body.genre instanceof Array)) {
-      if (typeof req.body.genre === "undefined") req.body.genre = [];
-      else req.body.genre = new Array(req.body.genre);
-    }
-    next();
-  },
-
+exports.user_create_post = [
   // Validate and sanitize fields.
-  body("title", "Title must not be empty.")
+  body("username", "Username must not be empty.")
     .trim()
     .isLength({ min: 1 })
     .escape(),
-  body("author", "Author must not be empty.")
+  body("password", "Password must not be empty.")
     .trim()
-    .isLength({ min: 1 })
+    .isLength({ min: 4 })
     .escape(),
-  body("summary", "Summary must not be empty.")
+  body("profileSummary", "Profile summary must not be empty.")
     .trim()
-    .isLength({ min: 1 })
+    .isLength({ min: 5 })
     .escape(),
-  body("isbn", "ISBN must not be empty").trim().isLength({ min: 1 }).escape(),
-  body("genre.*").escape(),
   // Process request after validation and sanitization.
 
   asyncHandler(async (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
-
+    console.log("TEST TEST")
+    console.log(req.body)
     // Create a Book object with escaped and trimmed data.
-    const book = new Book({
-      title: req.body.title,
-      author: req.body.author,
-      summary: req.body.summary,
-      isbn: req.body.isbn,
-      genre: req.body.genre,
+    const user = new User({
+      username: req.body.username,
+      password: req.body.password,
+      profilePicture: "none",
+      profileSummary: req.body.profileSummary,
     });
 
-    if (!errors.isEmpty()) {
-      // There are errors. Render form again with sanitized values/error messages.
+    const findUserByUsername = async (username) => {
+      try {
+        // Use findOne() to find a user by username
+        const user = await User.findOne({ username: username });
+    
+        if (user) {
+          console.log('User found:', user);
+          res.json({response: "User already exists with that name", userUrl: user.url});
+        } else {
+          if (!errors.isEmpty()) {
+        // There are errors. Render form again with sanitized values/error messages.
 
-      // Get all authors and genres for form.
-      const [allAuthors, allGenres] = await Promise.all([
-        Author.find().exec(),
-        Genre.find().exec(),
-      ]);
-
-      // Mark our selected genres as checked.
-      for (const genre of allGenres) {
-        if (book.genre.includes(genre._id)) {
-          genre.checked = "true";
+          res.json({
+            title: "Account created",
+            user: user,
+            errors: errors.array(),
+          });
+        } else {
+          // Data from form is valid. Save book.
+          await user.save();
+          res.redirect(user.url);
+          }
         }
+      } catch (error) {
+        console.error('Error:', error.message);
       }
-      res.render("book_form", {
-        title: "Create Book",
-        authors: allAuthors,
-        genres: allGenres,
-        book: book,
-        errors: errors.array(),
-      });
-    } else {
-      // Data from form is valid. Save book.
-      await book.save();
-      res.redirect(book.url);
-    }
+    };
+    findUserByUsername(req.body.username)
+    
   }),
 ];
 
+// Display details of user
+exports.user_profile = asyncHandler(async (req, res, next) => {
+  console.log(req.params)
+  console.log("USER PROFILE TEST")
+  const user = await User.findById(req.params.userid).exec();
 
-
-
-
-
+  if(user) {
+    res.json({
+      title: user.username+" - profile",
+      user: user
+    });
+  }
+  else {
+    res.json({
+      message: "User not found"
+    })
+  }
+});
