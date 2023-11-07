@@ -11,6 +11,8 @@ router.get("/", user_controller.index);
 // Create user with unique username -route
 router.post("/user/create", user_controller.user_create_post);
 
+router.post("/user/login", user_controller.user_login_post);
+
 router.get("/user/:userid", user_controller.user_profile);
 
 module.exports = router;

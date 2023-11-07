@@ -79,6 +79,58 @@ exports.user_create_post = [
   }),
 ];
 
+exports.user_login_post = [
+  // Validate and sanitize fields.
+  body("username", "Username must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("password", "Password must not be empty.")
+    .trim()
+    .isLength({ min: 4 })
+    .escape(),
+  body("profileSummary", "Profile summary must not be empty.")
+    .trim()
+    .isLength({ min: 5 })
+    .escape(),
+  // Process request after validation and sanitization.
+
+  asyncHandler(async (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+    console.log("TEST LOGIn")
+    console.log(req.body)
+    console.log(req.body.username)
+
+    const findUserByUsername = async (username) => {
+      try {
+        // Use findOne() to find a user by username
+        const user = await User.findOne({ username: username });
+    
+        if (user) {
+          console.log('User found:', user);
+          res.json({response: "User already exists with that name", userUrl: user.url});
+        } else {
+          if (!errors.isEmpty()) {
+        // There are errors. Render form again with sanitized values/error messages.
+
+          res.json({
+            title: "Account not found",
+            errors: errors.array(),
+          });
+        } else {
+          res.redirect("/");
+          }
+        }
+      } catch (error) {
+        console.error('Error:', error.message);
+      }
+    };
+    findUserByUsername(req.body.username)
+    
+  }),
+];
+
 // Display details of user
 exports.user_profile = asyncHandler(async (req, res, next) => {
   console.log(req.params)
