@@ -32,8 +32,8 @@ const Navbar = () => {
     <button className="login-button">Log In</button>
     </Link>
     button2 = 
-    <Link to="signup">
-      <button className="signup-button">Sign Up</button>
+    <Link to="register">
+      <button className="register-button">Register</button>
     </Link>
   } 
   else {

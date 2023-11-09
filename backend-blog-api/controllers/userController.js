@@ -66,14 +66,19 @@ exports.user_create_post = [
         // There are errors. Render form again with sanitized values/error messages.
 
           res.json({
-            title: "Account created",
+            title: "Failed to create account",
             user: newUser,
             errors: errors.array(),
           });
         } else {
           // Data from form is valid. Save book.
           await newUser.save();
-          res.redirect(newUser.url);
+          //res.redirect(newUser.url);
+          res.json({
+            title: "Account created",
+            user: newUser,
+            errors: errors.array(),
+          });
           }
         }
       } catch (error) {

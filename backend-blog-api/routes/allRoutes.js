@@ -9,7 +9,7 @@ const user_controller = require("../controllers/userController");
 router.get("/", user_controller.index);
 
 // Create user with unique username -route
-router.post("/user/create", user_controller.user_create_post);
+router.post("/user/register", user_controller.user_create_post);
 
 router.post("/user/login", user_controller.user_login_post);
 
