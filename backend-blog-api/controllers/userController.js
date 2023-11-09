@@ -1,7 +1,9 @@
 const User = require("../models/user");
 const { body, validationResult } = require("express-validator");
-
-
+const passport = require("passport")
+const LocalStrategyConfiguration = require("../utils/passportSetup.js")
+const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
 const asyncHandler = require("express-async-handler");
 
 exports.index = asyncHandler(async (req, res, next) => {
@@ -40,14 +42,18 @@ exports.user_create_post = [
     console.log("TEST TEST")
     console.log(req.body)
     // Create a Book object with escaped and trimmed data.
+
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
     const user = new User({
       username: req.body.username,
-      password: req.body.password,
+      password: hashedPassword,
       profilePicture: "none",
       profileSummary: req.body.profileSummary,
     });
 
-    const findUserByUsername = async (username) => {
+    
+    const findUserByUsername = async (username, newUser) => {
       try {
         // Use findOne() to find a user by username
         const user = await User.findOne({ username: username });
@@ -61,20 +67,20 @@ exports.user_create_post = [
 
           res.json({
             title: "Account created",
-            user: user,
+            user: newUser,
             errors: errors.array(),
           });
         } else {
           // Data from form is valid. Save book.
-          await user.save();
-          res.redirect(user.url);
+          await newUser.save();
+          res.redirect(newUser.url);
           }
         }
       } catch (error) {
         console.error('Error:', error.message);
       }
     };
-    findUserByUsername(req.body.username)
+    findUserByUsername(req.body.username, user)
     
   }),
 ];
@@ -94,41 +100,40 @@ exports.user_login_post = [
     .isLength({ min: 5 })
     .escape(),
   // Process request after validation and sanitization.
+  async (req, res, next) => {
+    console.log("Login test")
+    const user = await User.findOne({username: req.body.username})
+      if(!user){
+        return res.status(403).json({msg: "Invalid credentials"})
+      } else {
+        bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
+          if(err) throw err
+          if(isMatch) {
+            const jwtPayload = {
+              id: user._id,
+              username: user.username
+            }
+            jwt.sign(
+              jwtPayload,
+              process.env.SECRET,
+              {
+                expiresIn: "1d"
+              },
+              (err, token) => {
+                res.json({success: true, token, message:"ok"})
+              }
+            )
 
-  asyncHandler(async (req, res, next) => {
-    // Extract the validation errors from a request.
-    const errors = validationResult(req);
-    console.log("TEST LOGIn")
-    console.log(req.body)
-    console.log(req.body.username)
-
-    const findUserByUsername = async (username) => {
-      try {
-        // Use findOne() to find a user by username
-        const user = await User.findOne({ username: username });
-    
-        if (user) {
-          console.log('User found:', user);
-          res.json({response: "User already exists with that name", userUrl: user.url});
-        } else {
-          if (!errors.isEmpty()) {
-        // There are errors. Render form again with sanitized values/error messages.
-
-          res.json({
-            title: "Account not found",
-            errors: errors.array(),
-          });
-        } else {
-          res.redirect("/");
           }
-        }
-      } catch (error) {
-        console.error('Error:', error.message);
+          else {
+            console.log("wrong password")
+            res.status(400).send({msg: "Invalid credentials"})
+          }
+        })
       }
-    };
-    findUserByUsername(req.body.username)
     
-  }),
+  }
+  
 ];
 
 // Display details of user
