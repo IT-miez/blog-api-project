@@ -1,6 +1,11 @@
 import '../index.css'
+import Navbar from "./Navbar"
 
 function Login() {
+
+    function storeToken(token) {
+        localStorage.setItem("auth_token", token);
+    }
 
     function fetchUserData(event) {
         event.preventDefault()
@@ -14,18 +19,46 @@ function Login() {
 
         fetch("http://localhost:5000/user/login",
         {
-          method: "POST",
-          body: {
-            username: givenUsername,
-            password: givenPassword
-          }
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                username: givenUsername,
+                password: givenPassword
+            })
         })
-        .then(response => console.log(response))
+        .then(response => response.json())
+        .then((data) => {
+            console.log("LOGIN FETCH")
+            if(data.token) {
+                console.log(data.token)
+                storeToken(data.token);
+                console.log("LOGIN SUCCESSFUL")
+                window.location.href="/posts";
+            } else {
+                console.log("NO TOKEN GIVEN")
+                if(data.msg){
+                    console.log(data.msg)
+                }
+                else if(data.message === "ok") {
+                    console.log("successfull")
+                    //window.location.href="/login.html";
+                } 
+                else {
+                    console.log("Very strange error!")
+                }
+  
+  
+            }
+  
+        })
         .catch(error => console.log(error))
     }
 
     return (
     <div className="login-container">
+        <Navbar></Navbar>
         <h1>Log In</h1>
         <hr />
         <div >
