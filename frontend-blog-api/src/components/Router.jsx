@@ -4,6 +4,7 @@ import Profile from "./Profile";
 import ErrorPage from "./ErrorPage";
 import Login from "./Login"
 import Register from "./Register";
+import CreatePost from "./CreatePost";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -13,16 +14,20 @@ const Router = () => {
       errorElement: <ErrorPage />,
     },
     {
-      path: "profile/:name",
+      path: "/profile/:name",
       element: <Profile />,
     },
     {
-      path: "login",
+      path: "/login",
       element: <Login />,
     },
     {
-      path: "register",
+      path: "/register",
       element: <Register />,
+    },
+    {
+      path: "/post/create",
+      element: <CreatePost />,
     },
   ]);
 

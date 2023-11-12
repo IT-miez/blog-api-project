@@ -1,7 +1,19 @@
 import '../index.css'
 import Navbar from "./Navbar"
+import EditorComponent from "./EditorComponent"
+import { useState } from 'react'
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-function Login() {
+
+function CreatePost() {
+
+
+
+
+    let [errorArray, setErrorArray] = useState([])
+    let [username, setUsername] = useState("")
+    let [password, setPassword] = useState("")
+    let [profileSummary, setProfileSummary] = useState("")
 
     function storeToken(token) {
         localStorage.setItem("auth_token", token);
@@ -17,7 +29,7 @@ function Login() {
         let givenPassword = document.querySelector('input[name="password"]').value
         
 
-        fetch("http://localhost:5000/user/login",
+        fetch("http://localhost:5000/post/create",
         {
             headers: {
                 "Content-Type": "application/json"
@@ -35,7 +47,7 @@ function Login() {
                 console.log(data.token)
                 storeToken(data.token);
                 console.log("LOGIN SUCCESSFUL")
-                window.location.href="/";
+                window.location.href="/posts";
             } else {
                 console.log("NO TOKEN GIVEN")
                 if(data.msg){
@@ -59,19 +71,19 @@ function Login() {
     return (
     <div className="login-container">
         <Navbar></Navbar>
-        <h1>Log In</h1>
+        <h1>Create Post</h1>
         <hr />
         <div >
         <form className="login-information"  onSubmit={fetchUserData}> 
         <div>
-            <label>Username
+            <label>Title
                 <input type="text" name="username" id="username" required/>
             </label>
         </div>
         <br></br>
         <div>
-            <label>Password</label>
-        <input type="text" name="password" id="password" required/>
+            <label>Text</label>
+        <EditorComponent/>
         </div>
         <input type="submit"/>
         </form>
@@ -81,4 +93,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default CreatePost;

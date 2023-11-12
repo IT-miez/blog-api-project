@@ -28,11 +28,11 @@ const Navbar = () => {
   const authToken = localStorage.getItem("auth_token")
   if(!authToken) {
     button1 = 
-    <Link to="login">
+    <Link to="/login">
     <button className="login-button">Log In</button>
     </Link>
     button2 = 
-    <Link to="register">
+    <Link to="/register">
       <button className="register-button">Register</button>
     </Link>
   } 
@@ -42,7 +42,7 @@ const Navbar = () => {
     button2 = ""
     information = <h2>Hello {tokenInformation.username}</h2>
     profile_button =
-    <Link to="">
+    <Link to="/">
       <button className="profile-button">Profile</button>
     </Link>
   }
