@@ -65,7 +65,7 @@ exports.user_create_post = [
           if (!errors.isEmpty()) {
         // There are errors. Render form again with sanitized values/error messages.
 
-          res.json({
+          res.status(400).json({
             title: "Failed to create account",
             user: newUser,
             errors: errors.array(),
