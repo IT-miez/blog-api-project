@@ -1,21 +1,20 @@
 const mongoose = require("mongoose");
 const { DateTime } = require("luxon");
+const user = require("./user");
 const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
-  _author: { type: Schema.types.ObjectId, required: true},
+  author: { type: Schema.Types.ObjectId, required: true, ref: user},
   title: { type: String, required: true, maxLength: 50 },
   thumbnail: { type: String, required: false},
-  postContent: { type: String, required: false, maxLength: 500 },
-  creationDate: new Date(),
-  editDate: {type: Date}
-});
+  content: { type: String, required: true },
+}, {timestamps: true});
 
 PostSchema.virtual("url").get(function () {
   return `/catalog/post/${this._id}`;
 });
 
-UserSchema.virtual("creationDate_formatted").get(function () {
+PostSchema.virtual("creationDate_formatted").get(function () {
   return this.creationDate ? DateTime.fromJSDate(this.creationDate).toLocaleString(DateTime.DATE_MED) : '';
 });
 

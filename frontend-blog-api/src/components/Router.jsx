@@ -5,6 +5,7 @@ import ErrorPage from "./ErrorPage";
 import Login from "./Login"
 import Register from "./Register";
 import CreatePost from "./CreatePost";
+import LargePost from "./LargePost"
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -28,6 +29,10 @@ const Router = () => {
     {
       path: "/post/create",
       element: <CreatePost />,
+    },
+    {
+      path: "/post/:postid",
+      element: <LargePost />,
     },
   ]);
 

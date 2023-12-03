@@ -1,0 +1,50 @@
+
+.shortpost-master {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shortpost-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+    background-color: #5f5f5f; /* Replace with your desired slightly darker gray color */
+    border-radius: 10px; /* Adjust the value to control the roundness of the corners */
+    padding: 10px; /* Adjust the value to set the padding */
+
+    width: 600px;
+    max-width: 600px;
+}
+
+.shortpost-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shortpost-left {
+
+}
+
+.shortpost-left-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+}
+
+.linkclass {
+    color: white;
+    text-decoration: none;
+}
+
+.title-text {
+    font-size: 28px;
+}
+
+.author-text {
+    font-size: 18px;
+}

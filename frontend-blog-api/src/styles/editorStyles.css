@@ -3,3 +3,13 @@
 .editor {
     background-color: rgb(68, 64, 64);
 }
+
+.draftjs-editor {
+    height: 200px;
+}
+
+.draftjs-wrapper {
+    background-color: white;
+    color: black;
+    min-height: 200px;
+}
