@@ -10,10 +10,10 @@ ESLint is used for finding styling issues and code readability issues.
 
 ## Version: 0.7 (26.12.2023)
 Most of the functionalities done.</br>
-User can register and login.
-User has profile page with all posts shown by titles.
-User can make posts.
-User can make comments to posts.
+User can register and login.</br>
+User has profile page with all posts shown by titles.</br>
+User can make posts.</br>
+User can make comments to posts.</br>
 
 ## Version: 0.1
 This version is only the base of the project with only templates done.
