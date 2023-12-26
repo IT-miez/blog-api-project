@@ -17,5 +17,7 @@ UserSchema.virtual("creationDate_formatted").get(function () {
   return this.creationDate ? DateTime.fromJSDate(this.creationDate).toLocaleString(DateTime.DATE_MED) : '';
 });
 
+
+
 // Export model
 module.exports = mongoose.model("User", UserSchema);

@@ -1,4 +1,5 @@
 const Post = require("../models/post");
+const Comment = require("../models/comment")
 const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken")
 const { body, validationResult } = require("express-validator");
@@ -53,6 +54,29 @@ exports.post_get_post = [
   })
 ];
 
+// Add comment to a post
+exports.post_add_comment = asyncHandler(async (req, res, next) => {
+  console.log("Comment add -route")
+  console.log(req.body)
+  
+  const comment = new Comment({
+    author: req.body.author,
+    post: req.body.post,
+    commentContent: req.body.comment,
+  })
+
+  console.log("Creating comment..")
+  console.log(comment)
+  await comment.save()
+
+  res.status(200).json({
+    msg: "Comment created",
+    comment: comment,
+    errors: errors.array()
+  })
+    
+});
+
 exports.post_test = asyncHandler(async (req, res, next) => {
   console.log("test")
   res.status(200).send("Works")
@@ -74,5 +98,22 @@ exports.get_post_content = asyncHandler(async (req, res, next) => {
     res.json({
       message: "Post not found"
     })
+  }
+});
+
+
+// Get all comments of a post
+exports.get_comments_of_a_post = asyncHandler(async (req, res, next) => {
+  
+  const postId = req.params.postid;
+  console.log("Finding all comments...")
+
+  try {
+    // Find all comments for the given post ID, sort them by createdAt
+    const comments = await Comment.find({ post: postId }).sort({ createdAt: 'asc' }).populate("author");
+    res.status(200).json(comments);
+  } catch (error) {
+    console.error('Error fetching comments:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });

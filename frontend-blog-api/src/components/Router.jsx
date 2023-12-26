@@ -7,7 +7,7 @@ import Register from "./Register";
 import CreatePost from "./CreatePost";
 import LargePost from "./LargePost"
 
-const Router = () => {
+const Router = () => {  
   const router = createBrowserRouter([
     {
       path: "/",

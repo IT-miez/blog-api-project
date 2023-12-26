@@ -18,5 +18,14 @@ PostSchema.virtual("creationDate_formatted").get(function () {
   return this.creationDate ? DateTime.fromJSDate(this.creationDate).toLocaleString(DateTime.DATE_MED) : '';
 });
 
+// Virtual for data formatting for createdAt
+PostSchema.virtual('createdAtFormatted').get(function () {
+  const date = this.createdAt;
+  const formattedDate = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+  return formattedDate;
+});
+
+PostSchema.set('toJSON', { virtuals: true });
+
 // Export model
 module.exports = mongoose.model("Post", PostSchema);

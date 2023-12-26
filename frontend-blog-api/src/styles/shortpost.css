@@ -5,6 +5,12 @@
     align-items: center;
 }
 
+.shortpost-outer-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
 .shortpost-wrapper {
     display: flex;
     flex-direction: row;
@@ -14,6 +20,7 @@
 
     background-color: #5f5f5f; /* Replace with your desired slightly darker gray color */
     border-radius: 10px; /* Adjust the value to control the roundness of the corners */
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.7);
     padding: 10px; /* Adjust the value to set the padding */
 
     width: 600px;
@@ -46,5 +53,6 @@
 }
 
 .author-text {
+    text-align: left;
     font-size: 18px;
 }

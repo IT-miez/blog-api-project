@@ -1,4 +1,6 @@
 const User = require("../models/user");
+const Post = require("../models/post");
+
 const { body, validationResult } = require("express-validator");
 const passport = require("passport")
 const LocalStrategyConfiguration = require("../utils/passportSetup.js")
@@ -141,15 +143,16 @@ exports.user_login_post = [
   
 ];
 
+
+
 // Display details of user
 exports.user_profile = asyncHandler(async (req, res, next) => {
   console.log(req.params)
-  console.log("USER PROFILE TEST")
+  console.log("User profile -route")
   const user = await User.findById(req.params.userid).exec();
 
   if(user) {
     res.json({
-      title: user.username+" - profile",
       user: user
     });
   }
@@ -160,3 +163,20 @@ exports.user_profile = asyncHandler(async (req, res, next) => {
   }
 });
 
+
+
+// Get all posts of a user
+exports.user_all_posts = asyncHandler(async (req, res, next) => {
+  console.log(req.params)
+  console.log("User all posts -route")
+
+  try {
+    // Find all comments for the given post ID, sort them by createdAt
+    const posts = await Post.find({author: req.params.userid}).sort({createdAt: -1}).exec();
+    console.log(posts)
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error('Error fetching all posts of a user:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});

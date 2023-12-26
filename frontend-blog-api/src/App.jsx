@@ -4,7 +4,6 @@ import Navbar from './components/Navbar';
 import ShortPost from './components/ShortPost';
 
 function App() {
-  const [count, setCount] = useState(0)
   const [posts, setPosts] = useState([])
 
   useEffect(() => {
@@ -16,6 +15,7 @@ function App() {
 
         // Update the state with the fetched data
         setPosts(result.posts);
+        console.log(result.posts)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -35,19 +35,8 @@ function App() {
       <div>
         <Navbar></Navbar>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <div>
+      
+      <div className="shortpost-outer-wrapper">
       {posts.length > 0 ? (
         // Map over the data array and render properties for each item
         posts.map((item, index) => (
@@ -55,7 +44,7 @@ function App() {
             key={index}
             post_id={item._id}
             author={item.author.username}
-            creationDate={item.createdAt}
+            creationDate={item.createdAtFormatted}
             title={item.title}
           />
         ))

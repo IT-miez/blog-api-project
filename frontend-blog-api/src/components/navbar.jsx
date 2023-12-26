@@ -1,5 +1,8 @@
-import '../index.css'; // Import a CSS file to style the component
+import '../index.css'; // Import a CSS file to style the component¨
+import "../styles/navbar.css"
 import { Link } from "react-router-dom";
+
+import parseJwt from "../utils/parseJwt";
 
 const Navbar = () => {
 
@@ -8,20 +11,10 @@ const Navbar = () => {
     window.location.href = "/"
   }
 
-  //StackOverflow function for parsing JWT-tokens
-  function parseJwt(token) {
-    console.log("Parsing token...")
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-
-    return JSON.parse(jsonPayload);
-  }
 
   let button1 = <button></button>
   let button2 = <button></button>
+  let button3 = ""
   let information = ""
   let profile_button = ""
 
@@ -38,15 +31,20 @@ const Navbar = () => {
   } 
   else {
     const tokenInformation = parseJwt(authToken)
+    console.log(tokenInformation)
     button1 = <button onClick={logoutButton}>Logout</button>
     button2 = ""
     information = <h2>Hello {tokenInformation.username}</h2>
     profile_button =
-    <Link to="/">
+    <Link to={`/profile/${tokenInformation.id}`}>
       <button className="profile-button">Profile</button>
     </Link>
   }
-
+  
+  button3 = 
+  <Link to="/">
+  <button className="profile-button">Posts</button>
+  </Link>
 
   return (
     <div>
@@ -54,7 +52,7 @@ const Navbar = () => {
             <h1 className="logo">Blogsite</h1>
         </div>
       <div className="navbar">
-        
+        {button3}
         <div className="container">
           <div>
             <div className="buttons">

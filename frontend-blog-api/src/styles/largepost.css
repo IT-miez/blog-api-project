@@ -3,3 +3,16 @@
     color: white;
     text-decoration: none;
 }
+
+.largepost-outer-wrapper {
+    padding: 20px;
+    background-color: #4b4a4a;
+    margin-top: 50px;
+}
+
+.largepost-wrapper {
+    background-color: grey;
+    padding: 25px;
+    border-radius: 10px;
+
+}
