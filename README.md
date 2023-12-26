@@ -6,7 +6,14 @@ Non-users can see posts but not comment.<br>
 
 ## Express backend, MongoDB database, React frontend
 This project uses Express for backend, MongoDB NoSQL database for data storage and React as frontend.
+ESLint is used for finding styling issues and code readability issues.
+
+## Version: 0.7 (26.12.2023)
+Most of the functionalities done.</br>
+User can register and login.
+User has profile page with all posts shown by titles.
+User can make posts.
+User can make comments to posts.
 
 ## Version: 0.1
-
 This version is only the base of the project with only templates done.
