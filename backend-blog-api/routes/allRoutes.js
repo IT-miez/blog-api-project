@@ -41,6 +41,8 @@ router.get("/comment/:postid",post_controller.get_comments_of_a_post);
 // * * POST routes * * 
 router.post("/post/create", post_controller.post_create_post);
 
+router.post("/post/:postid/delete", post_controller.delete_post)
+
 router.post("/comment/create", post_controller.post_add_comment);
 
 

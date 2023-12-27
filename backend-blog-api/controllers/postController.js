@@ -6,29 +6,25 @@ const { body, validationResult } = require("express-validator");
 
 // Handle book create on POST.
 exports.post_create_post = asyncHandler(async (req, res, next) => {
-      console.log("Backend: Post Creation -route")
-      console.log(req.body.content)
 
-      const post = new Post({
-      author: req.body.author,
-      title: req.body.title,
-      thumbnail: "",
-      content: JSON.stringify(req.body.content)
-      })
+  const post = new Post({
+  author: req.body.author,
+  title: req.body.title,
+  thumbnail: "",
+  content: JSON.stringify(req.body.content)
+  })
 
-      console.log("Logging post..")
-      console.log(post)
-      await post.save()
+  await post.save()
 
-      res.status(200).json({
-        title: "Post created",
-        post: post,
-        errors: errors.array()
-      })
-    });
+  res.status(200).json({
+    title: "Post created",
+    post: post,
+    errors: errors.array()
+  })
+});
 
+// Get all posts
 exports.post_get_post = [
-  // Validate and sanitize fields.
  
   asyncHandler(async (req, res, next) => {
       console.log("test")
@@ -39,9 +35,7 @@ exports.post_get_post = [
         // Fetch posts with specified fields
         const allPosts = await Post.find({})
           .populate('author', 'username') // Add fields you want for the author
-          .select('author title content createdAt'); // Select the fields you want for the post
-        console.log(allPosts)
-
+          .select('author title createdAt').sort({createdAt: "desc"}); // Select the fields you want for the post
         res.status(200).json({
           posts: allPosts,
         })
@@ -116,4 +110,25 @@ exports.get_comments_of_a_post = asyncHandler(async (req, res, next) => {
     console.error('Error fetching comments:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
+});
+
+
+
+// Delete a post based on id
+exports.delete_post = asyncHandler(async (req, res, next) => {
+  const postId = req.body.postId;
+
+  try {
+    const deletedPost = await Post.findByIdAndDelete(postId);
+    
+    if (!deletedPost) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+
+    res.json({ message: 'Post deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting post:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+
 });

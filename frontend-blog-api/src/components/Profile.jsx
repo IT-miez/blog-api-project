@@ -37,29 +37,25 @@ const Profile = () => {
 
         // Update the state with the fetched data
         console.log(allPostsResult)
-        setUserPosts(allPostsResult);
+        if (allPostsResult.length > 0) {
+          setUserPosts(allPostsResult);
+        } else {
+          setUserPosts("No posts found. Post your first blog!")
+        }
+        
       } catch (error) {
         console.error('Error fetching all posts of a user:', error);
       }
 
     };
 
-    fetchData(); // Call the fetchData function
-
-    // If you have cleanup logic, you can return a function from useEffect
-    // This function will be called when the component is unmounted or when the dependency array changes
-    // For example, if you have other dependencies, add them to the array like [dependency1, dependency2]
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-
-
-
-  }, []); // Empty dependency array means the effect runs only once (on mount)
+    fetchData();
+  }, []);
 
   return (
     <div>
       <Navbar></Navbar>
       {profileData ? (
-        // Render content when data exists
         <div className="profile-container">
           <h1>{profileData.user.username}</h1>
           <div className="profile-inner-container">
@@ -72,14 +68,15 @@ const Profile = () => {
           
         </div>
       ) : (
-        // Render content or perform action when data doesn't exist
         <div>
           <h2>Loading profile data....</h2>
         </div>
       )}
       <div className="shortpost-outer-wrapper" style={{marginTop: "40px"}}>
-        {userPosts.length > 0 ? (
-          // Map over the data array and render properties for each item
+      {userPosts ? (
+        typeof userPosts === 'string' ? (
+          <p>{userPosts}</p>
+        ) : userPosts.length > 0 ? (
           userPosts.map((item, index) => (
             <ShortPost
               key={index}
@@ -89,9 +86,13 @@ const Profile = () => {
             />
           ))
         ) : (
-          // Render loading or placeholder content while data is being fetched
-          <p>Loading posts...</p>
-        )}
+          // If userPosts is an empty array
+          <p>No posts available.</p>
+        )
+      ) : (
+        // Render loading or placeholder content while data is being fetched
+        <p>Loading posts...</p>
+      )}
       </div>
     </div>
   );

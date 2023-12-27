@@ -6,13 +6,25 @@ import CreateComment from './CreateComment';
 import draftToHtml from 'draftjs-to-html'; // Import draftjs-to-html
 import { EditorState, convertFromRaw } from 'draft-js';
 
+import parseJwt from "../utils/parseJwt";
+
 import "../styles/largepost.css"
 import "../styles/commentbox.css"
+import AuthorButtons from './AuthorButtons';
 
 
 function LargePost() {
     const [postContent, setPostContent] = useState(null);
     const [commentList, setCommentList] = useState(null);
+    const [postAuthor, setPostAuthor] = useState(null)
+    const [dataFetched, setDataFetched] = useState(false);
+
+    const authToken = localStorage.getItem("auth_token")
+    let tokenInformation = ""
+    if(authToken) {
+      tokenInformation = parseJwt(authToken)
+    }
+    
 
     const location = useLocation();
     const pathnameParts = location.pathname.split('/');
@@ -47,37 +59,23 @@ function LargePost() {
     useEffect(() => {
     const fetchData = async () => {
         try {
-            // Perform your data fetching here (e.g., using fetch, axios, etc.)
             const response = await fetch("http://localhost:5000/post/"+post_id);
             const result = await response.json();
             const response2 = await fetch("http://localhost:5000/comment/"+post_id)
             const result2 = await response2.json()
             
-            // Update the state with the fetched data
-            console.log("Result below:")
-            console.log(result)
-            console.log(result.post.content)
-            console.log(typeof result.post.content)
             const parsedJson = await JSON.parse(result.post.content)
-            console.log("Parsed JSON:")
-            console.log(parsedJson)
 
+            console.log("Author is: " +result.post.author)
+            setPostAuthor(result.post.author)
+            console.log("Current user is: "+tokenInformation.id)
 
-
-            //let modifiedContent = await convertContentToHtml(parsedJson)
             let modifiedContent = draftToHtml(parsedJson)
-            console.log('HTML Content:');
-            console.log(modifiedContent);
             setPostContent(modifiedContent)
-
-            console.log("Logging result2")
-            console.log(result2)
+            setDataFetched(true)
             let juttu = result2
             setCommentList(juttu)
-            
-            /*
-            setPostContent(newResult);
-            */
+
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -98,9 +96,15 @@ function LargePost() {
                 <div className="largepost-wrapper" dangerouslySetInnerHTML={{ __html: postContent }} />
             )}
         </div>
-        <div className="comment-box-wrapper">
-
-        
+        <div>
+          {dataFetched && (
+            <AuthorButtons
+              currentUser={tokenInformation.id}
+              postAuthor={postAuthor}
+            />
+          )}
+        </div>
+        <div className="comment-box-wrapper">   
         {commentList ? (
         commentList.length > 0 ? (
             commentList.map((item, index) => (
@@ -124,7 +128,7 @@ function LargePost() {
         <p>Loading comments...</p>
       )}
       </div>
-        <CreateComment/>
+        {tokenInformation && <CreateComment />}
         </div>
     </>
     )

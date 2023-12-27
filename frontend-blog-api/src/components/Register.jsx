@@ -1,4 +1,5 @@
 import '../index.css'
+import "../styles/register.css"
 import Navbar from "./Navbar"
 import { useState } from 'react'
 
@@ -11,11 +12,7 @@ function Register() {
     let [profileSummary, setProfileSummary] = useState("")
 
     function fetchUserData(event) {
-        console.log(username)
-        console.log(password)
-        console.log(profileSummary)
         event.preventDefault()
-        console.log("test user data")
         /*
         console.log(document.querySelector('input[name="username"]').value)
         console.log(document.querySelector('input[name="password"]').value)
@@ -41,9 +38,6 @@ function Register() {
         })
         .then(response => response.json())
         .then((data) => {
-            console.log("REGISTER FETCH OUTPUT")
-            console.log(data)
-            console.log(data.errors)
             if(data.errors) {
                 setErrorArray(data.errors)
                 for(let i = 0; i < errorArray.length; i++){
@@ -63,40 +57,39 @@ function Register() {
     return (
     <div className="login-container">
         <Navbar></Navbar>
-        <h1>Register</h1>
-        <hr />
-        <div >
-        <form className="login-information"  onSubmit={fetchUserData}> 
-        <div>
-            <label>Username
-                <input type="text" name="username" id="username" required value={username} onChange={(event) => {setUsername(event.target.value)}}/>
-            </label>
-        </div>
-        <br></br>
-        <div>
-            <label>Password
-                <input type="text" name="password" id="password" required value={password} onChange={(event) => {setPassword(event.target.value)}}/>
-            </label>
-        </div>
-        <br></br>
-        <div>
-            <label>Profile bio
-                <input type="textfield" name="profile_summary" id="profile_summary" value={profileSummary} onChange={(event) => {setProfileSummary(event.target.value)}}/>
-            </label>
-        </div>
-        <input type="submit"/>
-        </form>
-        <div>
-        {errorArray ? (
-            <ul>
-            {errorArray.map((element, index) => (
-                <li key={index}>{element.msg}</li>
-            ))}
-            </ul>
-            ) : (
-                <p></p>
-            )}
-    </div>
+        <div className="register-form">
+            <h1>Register</h1>
+            <hr />
+            <div >
+            <form className="login-information"  onSubmit={fetchUserData}>
+            <div>
+                <label>Username</label>
+                    <input type="text" name="username" id="username" required value={username} onChange={(event) => {setUsername(event.target.value)}}/>
+            </div>
+            <br></br>
+            <div>
+                <label>Password</label>
+                    <input type="text" name="password" id="password" required value={password} onChange={(event) => {setPassword(event.target.value)}}/>
+            </div>
+            <br></br>
+            <div>
+                <label>Profile bio</label>
+                    <input type="textfield" name="profile_summary" id="profile_summary" value={profileSummary} onChange={(event) => {setProfileSummary(event.target.value)}}/>
+            </div>
+            <input type="submit" className="submit-button"/>
+            </form>
+            <div>
+            {errorArray ? (
+                <ul>
+                {errorArray.map((element, index) => (
+                    <li key={index}>{element.msg}</li>
+                ))}
+                </ul>
+                ) : (
+                    <p></p>
+                )}
+                </div>
+            </div>
         </div>
         
     </div>

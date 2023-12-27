@@ -1,4 +1,5 @@
 import '../index.css'
+import "../styles/login.css"
 import Navbar from "./Navbar"
 
 function Login() {
@@ -59,22 +60,25 @@ function Login() {
     return (
     <div className="login-container">
         <Navbar></Navbar>
-        <h1>Log In</h1>
-        <hr />
-        <div >
-        <form className="login-information"  onSubmit={fetchUserData}> 
-        <div>
-            <label>Username
-                <input type="text" name="username" id="username" required/>
-            </label>
-        </div>
-        <br></br>
-        <div>
-            <label>Password</label>
-        <input type="text" name="password" id="password" required/>
-        </div>
-        <input type="submit"/>
-        </form>
+
+        <div className="login-form">
+            <h1>Log In</h1>
+            <hr />
+            <div >
+            <form className="login-information"  onSubmit={fetchUserData}>
+            <div>
+                <label>Username</label>
+                    <input type="text" name="username" id="username" required/>
+            </div>
+            <br></br>
+            <div>
+                <label>Password</label>
+            <input type="text" name="password" id="password" required/>
+            
+            </div>
+            <input type="submit" className="submit-button"/>
+            </form>
+            </div>
         </div>
         
     </div>

@@ -1,0 +1,31 @@
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-items: center;
+
+}
+
+.login-information {
+    display: flex;
+    align-items: center;
+}
+
+.submit-button {
+    width: 120px;
+}
+
+hr {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+}
+
+label {
+    display: block; /* Make the label a block element */
+    font-size: 0.8em; /* Set the font size smaller than usual text */
+    margin-bottom: 5px; /* Add some spacing between the label and input */
+    text-align: start;
+}
