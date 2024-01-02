@@ -10,9 +10,6 @@ function Login() {
 
     function fetchUserData(event) {
         event.preventDefault()
-        console.log("test user data")
-        console.log(document.querySelector('input[name="username"]').value)
-        console.log(document.querySelector('input[name="password"]').value)
 
         let givenUsername = document.querySelector('input[name="username"]').value
         let givenPassword = document.querySelector('input[name="password"]').value
@@ -31,26 +28,11 @@ function Login() {
         })
         .then(response => response.json())
         .then((data) => {
-            console.log("LOGIN FETCH")
             if(data.token) {
-                console.log(data.token)
                 storeToken(data.token);
-                console.log("LOGIN SUCCESSFUL")
                 window.location.href="/";
             } else {
-                console.log("NO TOKEN GIVEN")
-                if(data.msg){
-                    console.log(data.msg)
-                }
-                else if(data.message === "ok") {
-                    console.log("successfull")
-                    //window.location.href="/login.html";
-                } 
-                else {
-                    console.log("Very strange error!")
-                }
-  
-  
+                console.log("Error?")
             }
   
         })

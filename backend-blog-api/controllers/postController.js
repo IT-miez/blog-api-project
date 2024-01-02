@@ -4,24 +4,23 @@ const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken")
 const { body, validationResult } = require("express-validator");
 
-// Handle book create on POST.
+// Create a blogpost
 exports.post_create_post = asyncHandler(async (req, res, next) => {
 
   const post = new Post({
-  author: req.body.author,
-  title: req.body.title,
-  thumbnail: "",
-  content: JSON.stringify(req.body.content)
+    author: req.token.id,
+    title: req.body.title,
+    thumbnail: "",
+    content: JSON.stringify(req.body.content)
   })
 
   await post.save()
 
   res.status(200).json({
     title: "Post created",
-    post: post,
-    errors: errors.array()
+    post: post
   })
-});
+  });
 
 // Get all posts
 exports.post_get_post = [
@@ -65,8 +64,7 @@ exports.post_add_comment = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     msg: "Comment created",
-    comment: comment,
-    errors: errors.array()
+    comment: comment
   })
     
 });
@@ -116,19 +114,33 @@ exports.get_comments_of_a_post = asyncHandler(async (req, res, next) => {
 
 // Delete a post based on id
 exports.delete_post = asyncHandler(async (req, res, next) => {
-  const postId = req.body.postId;
+  const postId = req.params.postid;
+  console.log(postId)
+  console.log("DELETING A POST")
 
   try {
-    const deletedPost = await Post.findByIdAndDelete(postId);
+
+    const givenPost = await Post.findById(postId).select("author")
+    console.log(req.token.id)
+    console.log(givenPost.author.toString())
+    if(req.token.id === givenPost.author.toString()) {
+      const deletedPost = await Post.findByIdAndDelete(postId);
     
-    if (!deletedPost) {
-      return res.status(404).json({ message: 'Post not found' });
+      if (!deletedPost) {
+        return res.status(404).json({ message: 'Post not found' });
+      }
+
+      res.status(200).json({ message: 'Post deleted successfully' });
+    } else {
+      res.status(401).json({msg: "Unauthorized"})
     }
 
-    res.json({ message: 'Post deleted successfully' });
+    
   } catch (error) {
     console.error('Error deleting post:', error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 
 });
+
+

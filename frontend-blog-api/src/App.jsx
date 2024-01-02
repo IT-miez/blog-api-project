@@ -48,6 +48,9 @@ function App() {
             title={item.title}
           />
         ))
+      ) : posts.length === 0 ? (
+        // Render a paragraph with the text "No posts found" if the array is empty
+        <p>No posts found.</p>
       ) : (
         // Render loading or placeholder content while data is being fetched
         <p>Loading posts...</p>

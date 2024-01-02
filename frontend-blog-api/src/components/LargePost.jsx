@@ -99,6 +99,7 @@ function LargePost() {
         <div>
           {dataFetched && (
             <AuthorButtons
+              postId={post_id}
               currentUser={tokenInformation.id}
               postAuthor={postAuthor}
             />

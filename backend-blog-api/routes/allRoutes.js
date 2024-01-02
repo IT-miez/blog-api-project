@@ -4,6 +4,8 @@ const router = express.Router();
 // Requires for all controllers
 const user_controller = require("../controllers/userController");
 const post_controller = require("../controllers/postController");
+const jwtExtract = require("../utils/extractJWTtoken");
+const passport = require("passport");
 
 // ALL ROUTES
 // GET home page.
@@ -39,9 +41,9 @@ router.get("/comment/:postid",post_controller.get_comments_of_a_post);
 
 // * * POST routes * *
 // * * POST routes * * 
-router.post("/post/create", post_controller.post_create_post);
+router.post("/post/create", jwtExtract, passport.authenticate("jwt",{session: false}), post_controller.post_create_post);
 
-router.post("/post/:postid/delete", post_controller.delete_post)
+router.delete("/post/:postid/delete", jwtExtract, passport.authenticate("jwt",{session: false}), post_controller.delete_post)
 
 router.post("/comment/create", post_controller.post_add_comment);
 

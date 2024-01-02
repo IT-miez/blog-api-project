@@ -15,6 +15,7 @@ const Navbar = () => {
   let button1 = <button></button>
   let button2 = <button></button>
   let button3 = ""
+  let createPostButton = ""
   let information = ""
   let profile_button = ""
 
@@ -39,6 +40,9 @@ const Navbar = () => {
     <Link to={`/profile/${tokenInformation.id}`}>
       <button className="profile-button">Profile</button>
     </Link>
+
+    createPostButton =
+    <Link to={"/post/create"}><button className="profile-button">Create Post</button></Link>
   }
   
   button3 = 
@@ -59,6 +63,9 @@ const Navbar = () => {
             {information}
             {profile_button}
             </div>
+          </div>
+          <div>
+            {createPostButton}
           </div>
           <div className="buttons">
             {button1}
