@@ -2,17 +2,18 @@
 This project is made while doing the Odin Project.<br>
 It is a simple blog-webpage where you can make an account, log in and make posts and comments to others posts.<br>
 User has a profile page and can add a profile picture.<br>
+Users can delete and edit their posts.<br>
 Non-users can see posts but not comment.<br>
 
 ## Express backend, MongoDB database, React frontend
-This project uses Express for backend, MongoDB NoSQL database for data storage and React as frontend.
+This project uses Express for backend, MongoDB NoSQL database for data storage and React as frontend.<br>
 ESLint is used for finding styling issues and code readability issues.
 
 ## Version: 0.7 (26.12.2023)
 Most of the functionalities done.</br>
 User can register and login.</br>
 User has profile page with all posts shown by titles.</br>
-User can make posts.</br>
+User can make and delete posts.</br>
 User can make comments to posts.</br>
 
 ## Version: 0.1
