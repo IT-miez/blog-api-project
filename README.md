@@ -2,7 +2,7 @@
 This project is made while doing the Odin Project.<br>
 It is a simple blog-webpage where you can make an account, log in and make posts and comments to others posts.<br>
 User has a profile page and can add a profile picture.<br>
-Users can delete and edit their posts.<br>
+Users can delete and edit their posts as well as comments.<br>
 Non-users can see posts but not comment.<br>
 
 ## Express backend, MongoDB database, React frontend
