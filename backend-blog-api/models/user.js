@@ -1,23 +1,20 @@
-const mongoose = require("mongoose");
-const { DateTime } = require("luxon");
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const { DateTime } = require('luxon');
+
+const { Schema } = mongoose;
 
 const UserSchema = new Schema({
   username: { type: String, required: true, maxLength: 30 },
   password: { type: String, required: true, maxLength: 100 },
-  profilePicture: { type: String, required: false},
+  profilePicture: { type: String, required: false },
   profileSummary: { type: String, required: false, maxLength: 200 },
-}, {timestamps: true});
+}, { timestamps: true });
 
-UserSchema.virtual("url").get(function () {
-  return `/users/${this._id}`;
-});
+UserSchema.virtual('url').get(() => `/users/${this._id}`);
 
-UserSchema.virtual("creationDate_formatted").get(function () {
+UserSchema.virtual('creationDate_formatted').get(function formatCreationDate() {
   return this.creationDate ? DateTime.fromJSDate(this.creationDate).toLocaleString(DateTime.DATE_MED) : '';
 });
 
-
-
 // Export model
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model('User', UserSchema);

@@ -1,12 +1,11 @@
-const User = require("../models/user");
-const Post = require("../models/post");
-
-const { body, validationResult } = require("express-validator");
-const passport = require("passport")
-const LocalStrategyConfiguration = require("../utils/passportSetup.js")
-const bcrypt = require("bcryptjs")
-const jwt = require("jsonwebtoken")
-const asyncHandler = require("express-async-handler");
+const { body, validationResult } = require('express-validator');
+const passport = require('passport');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const asyncHandler = require('express-async-handler');
+const LocalStrategyConfiguration = require('../utils/passportSetup');
+const Post = require('../models/post');
+const User = require('../models/user');
 
 exports.index = asyncHandler(async (req, res, next) => {
   // Get details of user
@@ -15,167 +14,142 @@ exports.index = asyncHandler(async (req, res, next) => {
   ]);
 
   res.json({
-    title: "User controller test",
+    title: 'User controller test',
     user_count: users,
   });
 });
 
-
 // Handle book create on POST.
 exports.user_create_post = [
   // Validate and sanitize fields.
-  body("username", "Username must not be empty.")
+  body('username', 'Username must not be empty.')
     .trim()
     .isLength({ min: 1 })
     .escape(),
-  body("password", "Password must not be empty.")
+  body('password', 'Password must not be empty.')
     .trim()
     .isLength({ min: 4 })
     .escape(),
-  body("profileSummary", "Profile summary must not be empty.")
+  body('profileSummary', 'Profile summary must not be empty.')
     .trim()
     .isLength({ min: 5 })
     .escape(),
   // Process request after validation and sanitization.
 
   asyncHandler(async (req, res, next) => {
-    // Extract the validation errors from a request.
     const errors = validationResult(req);
-    console.log("TEST TEST")
-    console.log(req.body)
-    // Create a Book object with escaped and trimmed data.
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
     const user = new User({
       username: req.body.username,
       password: hashedPassword,
-      profilePicture: "none",
+      profilePicture: 'none',
       profileSummary: req.body.profileSummary,
     });
 
-    
     const findUserByUsername = async (username, newUser) => {
       try {
         // Use findOne() to find a user by username
-        const user = await User.findOne({ username: username });
-    
+        const user = await User.findOne({ username });
+
         if (user) {
-          console.log('User found:', user);
-          res.json({response: "User already exists with that name", userUrl: user.url});
-        } else {
-          if (!errors.isEmpty()) {
+          res.json({ response: 'User already exists with that name', userUrl: user.url });
+        } else if (!errors.isEmpty()) {
         // There are errors. Render form again with sanitized values/error messages.
 
           res.status(400).json({
-            title: "Failed to create account",
+            title: 'Failed to create account',
             user: newUser,
             errors: errors.array(),
           });
         } else {
           // Data from form is valid. Save book.
           await newUser.save();
-          //res.redirect(newUser.url);
+          // res.redirect(newUser.url);
           res.json({
-            title: "Account created",
+            title: 'Account created',
             user: newUser,
             errors: errors.array(),
           });
-          }
         }
       } catch (error) {
+        // eslint-disable-next-line
         console.error('Error:', error.message);
       }
     };
-    findUserByUsername(req.body.username, user)
-    
+    findUserByUsername(req.body.username, user);
   }),
 ];
 
 exports.user_login_post = [
   // Validate and sanitize fields.
-  body("username", "Username must not be empty.")
+  body('username', 'Username must not be empty.')
     .trim()
     .isLength({ min: 1 })
     .escape(),
-  body("password", "Password must not be empty.")
+  body('password', 'Password must not be empty.')
     .trim()
     .isLength({ min: 4 })
     .escape(),
-  body("profileSummary", "Profile summary must not be empty.")
+  body('profileSummary', 'Profile summary must not be empty.')
     .trim()
     .isLength({ min: 5 })
     .escape(),
   // Process request after validation and sanitization.
   async (req, res, next) => {
-    console.log("Login test")
-    const user = await User.findOne({username: req.body.username})
-      if(!user){
-        return res.status(403).json({msg: "Invalid credentials"})
+    const user = await User.findOne({ username: req.body.username });
+    if (!user) {
+      return res.status(403).json({ msg: 'Invalid credentials' });
+    }
+    bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
+      if (err) throw err;
+      if (isMatch) {
+        const jwtPayload = {
+          id: user._id,
+          username: user.username,
+        };
+        jwt.sign(
+          jwtPayload,
+          process.env.SECRET,
+          {
+            expiresIn: '1d',
+          },
+          (err, token) => {
+            res.json({ success: true, token, message: 'ok' });
+          },
+        );
       } else {
-        bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
-          if(err) throw err
-          if(isMatch) {
-            const jwtPayload = {
-              id: user._id,
-              username: user.username
-            }
-            jwt.sign(
-              jwtPayload,
-              process.env.SECRET,
-              {
-                expiresIn: "1d"
-              },
-              (err, token) => {
-                res.json({success: true, token, message:"ok"})
-              }
-            )
-
-          }
-          else {
-            console.log("wrong password")
-            res.status(400).send({msg: "Invalid credentials"})
-          }
-        })
+        res.status(400).send({ msg: 'Invalid credentials' });
       }
-    
-  }
-  
+    });
+  },
+
 ];
-
-
 
 // Display details of user
 exports.user_profile = asyncHandler(async (req, res, next) => {
-  console.log(req.params)
-  console.log("User profile -route")
   const user = await User.findById(req.params.userid).exec();
 
-  if(user) {
+  if (user) {
     res.json({
-      user: user
+      user,
     });
-  }
-  else {
+  } else {
     res.json({
-      message: "User not found"
-    })
+      message: 'User not found',
+    });
   }
 });
 
-
-
 // Get all posts of a user
 exports.user_all_posts = asyncHandler(async (req, res, next) => {
-  console.log(req.params)
-  console.log("User all posts -route")
-
   try {
     // Find all comments for the given post ID, sort them by createdAt
-    const posts = await Post.find({author: req.params.userid}).sort({createdAt: -1}).exec();
-    console.log(posts)
+    const posts = await Post.find({ author: req.params.userid }).sort({ createdAt: -1 }).exec();
     res.status(200).json(posts);
   } catch (error) {
+    // eslint-disable-next-line
     console.error('Error fetching all posts of a user:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }

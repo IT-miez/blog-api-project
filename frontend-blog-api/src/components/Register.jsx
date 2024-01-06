@@ -1,99 +1,79 @@
-import '../index.css'
-import "../styles/register.css"
-import Navbar from "./Navbar"
-import { useState } from 'react'
+import "../index.css";
+import "../styles/register.css";
+import { useState } from "react";
+import Navbar from "./Navbar";
 
 function Register() {
+	const [errorArray, setErrorArray] = useState([]);
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+	const [profileSummary, setProfileSummary] = useState("");
 
+	function fetchUserData(event) {
+		event.preventDefault();
 
-    let [errorArray, setErrorArray] = useState([])
-    let [username, setUsername] = useState("")
-    let [password, setPassword] = useState("")
-    let [profileSummary, setProfileSummary] = useState("")
+		fetch(
+			"http://localhost:5000/user/register",
+			{
+				headers: {
+					"Content-Type": "application/json",
+				},
+				method: "POST",
+				body: JSON.stringify({
+					username,
+					password,
+					profileSummary,
 
-    function fetchUserData(event) {
-        event.preventDefault()
-        /*
-        console.log(document.querySelector('input[name="username"]').value)
-        console.log(document.querySelector('input[name="password"]').value)
-        console.log(document.querySelector('input[name="profile-summary"]').value)
+				}),
+			},
+		)
+			.then((response) => response.json())
+			.then((data) => {
+				// TODO: redirect user on success, error popup on unsuccess
+			})
+			// eslint-disable-next-line
+			.catch((error) => console.log(error));
+	}
 
-        let givenUsername = document.querySelector('input[name="username"]').value
-        let givenPassword = document.querySelector('input[name="password"]').value
-        let givenSummary = document.querySelector('input[name="profile-summary"]').value
-        */
-
-        fetch("http://localhost:5000/user/register",
-        {
-            headers: {
-                "Content-Type": "application/json"
-            },
-            method: "POST",
-            body: JSON.stringify({
-                username: username,
-                password: password,
-                profileSummary: profileSummary
-
-            })
-        })
-        .then(response => response.json())
-        .then((data) => {
-            if(data.errors) {
-                setErrorArray(data.errors)
-                for(let i = 0; i < errorArray.length; i++){
-                    console.log(errorArray[i].msg)
-                }
-            }
-  
-            
-            
-  
-        })
-        .catch(error => console.log(error))
-    }
-
-    
-
-    return (
-    <div className="login-container">
-        <Navbar></Navbar>
-        <div className="register-form">
-            <h1>Register</h1>
-            <hr />
-            <div >
-            <form className="login-information"  onSubmit={fetchUserData}>
-            <div>
-                <label>Username</label>
-                    <input type="text" name="username" id="username" required value={username} onChange={(event) => {setUsername(event.target.value)}}/>
-            </div>
-            <br></br>
-            <div>
-                <label>Password</label>
-                    <input type="text" name="password" id="password" required value={password} onChange={(event) => {setPassword(event.target.value)}}/>
-            </div>
-            <br></br>
-            <div>
-                <label>Profile bio</label>
-                    <input type="textfield" name="profile_summary" id="profile_summary" value={profileSummary} onChange={(event) => {setProfileSummary(event.target.value)}}/>
-            </div>
-            <input type="submit" className="submit-button"/>
-            </form>
-            <div>
-            {errorArray ? (
-                <ul>
-                {errorArray.map((element, index) => (
-                    <li key={index}>{element.msg}</li>
-                ))}
-                </ul>
-                ) : (
-                    <p></p>
-                )}
-                </div>
-            </div>
-        </div>
-        
-    </div>
-    );
+	return (
+		<div className="login-container">
+			<Navbar />
+			<div className="register-form">
+				<h1>Register</h1>
+				<hr />
+				<div>
+					<form className="login-information" onSubmit={fetchUserData}>
+						<div>
+							<label>Username</label>
+							<input type="text" name="username" id="username" required value={username} onChange={(event) => { setUsername(event.target.value); }} />
+						</div>
+						<br />
+						<div>
+							<label>Password</label>
+							<input type="text" name="password" id="password" required value={password} onChange={(event) => { setPassword(event.target.value); }} />
+						</div>
+						<br />
+						<div>
+							<label>Profile bio</label>
+							<input type="textfield" name="profile_summary" id="profile_summary" value={profileSummary} onChange={(event) => { setProfileSummary(event.target.value); }} />
+						</div>
+						<input type="submit" className="submit-button" />
+					</form>
+					<div>
+						{errorArray ? (
+							<ul>
+								{errorArray.map((element) => (
+									<li key={crypto.randomUUID()}>{element.msg}</li>
+								))}
+							</ul>
+						) : (
+							<p />
+						)}
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 }
 
 export default Register;

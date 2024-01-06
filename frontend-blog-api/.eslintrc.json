@@ -1,15 +1,42 @@
 {
-  "env": {
-    "browser": true
-  },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:react/jsx-runtime",
-    "airbnb",
-    "airbnb/hooks"
-  ],
-  "rules": {
-    "quotes": [1, "double"]
-  }
+	"env": {
+		"browser": true
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:react/recommended",
+		"plugin:react/jsx-runtime",
+		"airbnb",
+		"airbnb/hooks"
+	],
+	"rules": {
+		"quotes": [
+			1,
+			"double"
+		],
+		"linebreak-style": [
+			2,
+			"windows"
+		],
+		"indent": [
+			"error",
+			"tab"
+		],
+		"react/jsx-indent": [
+			"error",
+			"tab"
+		],
+		"react/jsx-indent-props": [
+			"error",
+			"tab"
+		],
+        "jsx-a11y/label-has-associated-control": "off",
+        "jsx-a11y/control-has-associated-label": "off",
+		"react/button-has-type": "off",
+		"no-tabs": "off",
+		"no-underscore-dangle": "off",
+		"react/prop-types": "off",
+		"react/function-component-definition": "off",
+		"react/react-in-jsx-scope": "off"
+	}
 }

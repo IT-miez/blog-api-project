@@ -1,24 +1,25 @@
-const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
-const User = require("../models/user");
-const bcrypt = require("bcryptjs")
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
+const bcrypt = require('bcryptjs');
 
 // JWT SETUP
-var JwtStrategy = require("passport-jwt").Strategy, ExtractJwt = require("passport-jwt").ExtractJwt
-const JwtStrategyConfiguration = new JwtStrategy({jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), secretOrKey: process.env.SECRET}, async function (jwt_payload, done) {
-    
-  
+const JwtStrategy = require('passport-jwt').Strategy; const
+  { ExtractJwt } = require('passport-jwt');
+
+const User = require('../models/user');
+
+const JwtStrategyConfiguration = new JwtStrategy({ jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), secretOrKey: process.env.SECRET }, (async (jwtPayload, done) => {
   try {
-    const user = await User.findOne({ username: jwt_payload.username });
-  
+    const user = await User.findOne({ username: jwtPayload.username });
+
     if (user) {
       return done(null, user);
-    } else {
-      return done(null, false);
     }
+    return done(null, false);
   } catch (err) {
     return done(err, false);
   }
-})
+}));
 // JWT SETUP DONE
-module.exports = JwtStrategyConfiguration
+module.exports = JwtStrategyConfiguration;
