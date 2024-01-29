@@ -54,7 +54,7 @@ exports.user_create_post = [
         const user = await User.findOne({ username });
 
         if (user) {
-          res.json({ response: 'User already exists with that name', userUrl: user.url });
+          res.status(400).json({ response: 'User already exists with that name', userUrl: user.url });
         } else if (!errors.isEmpty()) {
         // There are errors. Render form again with sanitized values/error messages.
 

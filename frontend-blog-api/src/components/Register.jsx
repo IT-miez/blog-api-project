@@ -1,6 +1,7 @@
 import "../index.css";
 import "../styles/register.css";
 import { useState } from "react";
+import { redirect } from "react-router-dom";
 import Navbar from "./Navbar";
 
 function Register() {
@@ -27,7 +28,16 @@ function Register() {
 				}),
 			},
 		)
-			.then((response) => response.json())
+			.then((response) => {
+				if(response.status==200) {
+					console.log("redirecting...")
+					window.location.href = '/';
+				}
+				else {
+					response = response.json()
+				}
+				
+			})
 			.then((data) => {
 				// TODO: redirect user on success, error popup on unsuccess
 			})

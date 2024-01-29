@@ -90,25 +90,35 @@ exports.get_comments_of_a_post = asyncHandler(async (req, res, next) => {
 });
 
 // Delete a post based on id
+// Delete all comments related to that post
 exports.delete_post = asyncHandler(async (req, res, next) => {
   const postId = req.params.postid;
 
   try {
+    // Delete all comments of the post
+    await Comment.deleteMany({ post: postId });
+  
+    // Delete the post
     const givenPost = await Post.findById(postId).select('author');
+  
+    if (!givenPost) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+  
     if (req.token.id === givenPost.author.toString()) {
       const deletedPost = await Post.findByIdAndDelete(postId);
-
+  
       if (!deletedPost) {
         return res.status(404).json({ message: 'Post not found' });
       }
-
-      res.status(200).json({ message: 'Post deleted successfully' });
+  
+      res.status(200).json({ message: 'Post and associated comments deleted successfully' });
     } else {
       res.status(401).json({ msg: 'Unauthorized' });
     }
   } catch (error) {
-    // eslint-disable-next-line
-    console.error('Error deleting post:', error);
+    console.error('Error deleting post and associated comments:', error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
+  
 });

@@ -24,7 +24,13 @@ function App() {
 
 	if (posts.length === 0) {
 		return (
-			<p>No posts found.</p>
+			<div>
+				<div>
+					<Navbar />
+				</div>
+				<p>No posts found.</p>
+			</div>
+			
 		);
 	}
 
