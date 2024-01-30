@@ -9,6 +9,8 @@ Non-users can see posts but not comment.<br>
 This project uses Express for backend, MongoDB NoSQL database for data storage and React as frontend.<br>
 ESLint is used for finding styling issues and code readability issues.
 
+![Main Page (not login as user)](image.png)
+
 ## Version: 0.7 (26.12.2023)
 Most of the functionalities done.</br>
 User can register and login.</br>
