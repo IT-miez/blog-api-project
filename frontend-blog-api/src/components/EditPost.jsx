@@ -52,13 +52,13 @@ function EditPost() {
 
       }, []);
 
-	function fetchPostCreationData(event) {
+	function fetchPostUpdate(event) {
 		event.preventDefault();
 		let givenEditorState = editorState;
 		givenEditorState = convertToRaw(givenEditorState.getCurrentContent());
 
 		fetch(
-			"http://localhost:5000/post/create",
+			`http://localhost:5000/post/${postId}/update`,
 			{
 				headers: {
 					"Content-Type": "application/json",
@@ -76,6 +76,7 @@ function EditPost() {
 			.then((data) => {
 				if (data) {
 					// TODO: check data
+					console.log(data)
 				}
 			})
 			// eslint-disable-next-line
@@ -93,7 +94,7 @@ function EditPost() {
 						<h1>Edit Post</h1>
 						<hr />
 						<div>
-							<form className="login-information" onSubmit={fetchPostCreationData}>
+							<form className="login-information" onSubmit={fetchPostUpdate}>
 								<br />
 								<div>
 									<label>Text</label>

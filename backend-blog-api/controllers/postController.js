@@ -21,6 +21,32 @@ exports.post_create_post = asyncHandler(async (req, res, next) => {
   });
 });
 
+// Update a blogpost
+exports.post_update_post = asyncHandler(async (req, res, next) => {
+  const postId = req.params.postid;
+  console.log(postId)
+
+  let post = await Post.findById(postId);
+
+  if (!post) {
+    return res.status(404).json({ error: 'Post not found' });
+  }
+
+  if (post.author.toString() !== req.token.id) {
+    return res.status(403).json({ error: 'You are not authorized to update this post' });
+  }
+
+  post.content = JSON.stringify(req.body.content);
+
+  await post.save();
+
+  res.status(200).json({
+    title: 'Post updated',
+    post,
+  });
+});
+
+
 // Get all posts
 exports.post_get_post = [
 

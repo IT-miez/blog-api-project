@@ -12,6 +12,7 @@ import "../styles/commentbox.css";
 import AuthorButtons from "./AuthorButtons";
 
 function LargePost() {
+	const [title, setTitle] = useState("");
 	const [postContent, setPostContent] = useState(null);
 	const [commentList, setCommentList] = useState(null);
 	const [postAuthor, setPostAuthor] = useState(null);
@@ -63,7 +64,7 @@ function LargePost() {
 				const parsedJson = await JSON.parse(result.post.content);
 
 				setPostAuthor(result.post.author);
-
+				setTitle(result.post.title)
 				const modifiedContent = draftToHtml(parsedJson);
 				setPostContent(modifiedContent);
 				setDataFetched(true);
@@ -85,7 +86,11 @@ function LargePost() {
 				{postContent === null ? (
 					<p>Loading post...</p>
 				) : (
-					<div className="largepost-wrapper" dangerouslySetInnerHTML={{ __html: postContent }} />
+					<div>
+						<h1>{title}</h1>
+						<div className="largepost-wrapper" dangerouslySetInnerHTML={{ __html: postContent }} />
+					</div>
+					
 				)}
 			</div>
 			<div>
