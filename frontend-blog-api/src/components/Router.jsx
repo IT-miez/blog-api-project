@@ -6,6 +6,7 @@ import Login from "./Login";
 import Register from "./Register";
 import CreatePost from "./CreatePost";
 import LargePost from "./LargePost";
+import EditPost from "./EditPost";
 
 const router = createBrowserRouter([
 	{
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
 		path: "/post/:postid",
 		element: <LargePost />,
 	},
+	{
+		path: "/post/:postid/edit",
+		element: <EditPost />
+	}
 ]);
 
 const Router = () => <RouterProvider router={router} />;

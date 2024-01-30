@@ -38,11 +38,15 @@ function AuthorButtons({
 		}
 	};
 
+	function handleEdit() {
+		window.location.href = `/post/${postId}/edit`
+	}
+
 	// Render the buttons only if currentUser is the same as postAuthor
 	return isCurrentUserAuthor ? (
 		<div>
 			<button onClick={handleDelete}>Delete</button>
-			<button onClick={onEdit}>Edit</button>
+			<button onClick={handleEdit}>Edit</button>
 			{confirmed && <p>Post deleted successfully!</p>}
 		</div>
 	) : null;

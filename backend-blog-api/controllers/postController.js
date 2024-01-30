@@ -70,7 +70,7 @@ exports.get_post_content = asyncHandler(async (req, res, next) => {
       post,
     });
   } else {
-    res.json({
+    res.status(404).json({
       message: 'Post not found',
     });
   }
