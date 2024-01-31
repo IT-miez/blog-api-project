@@ -53,7 +53,7 @@ const Profile = () => {
 					userPosts.map((item) => (
 						<ShortPost
 							key={crypto.randomUUID()}
-							post_id={item._id}
+							postId={item._id}
 							title={item.title}
 							creationDate={item.createdAtFormatted}
 						/>

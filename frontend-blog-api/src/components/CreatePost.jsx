@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { EditorState, convertToRaw } from "draft-js";
 import Navbar from "./Navbar";
+import { useNavigate } from "react-router-dom";
 import EditorComponent from "./EditorComponent";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 import "../styles/createpost.css";
 
 import parseJwt from "../utils/parseJwt";
+import { Navigate } from "react-router-dom";
 
 function CreatePost() {
+	const navigate = useNavigate();
+
 	let tokenInformation = "";
 	const authToken = localStorage.getItem("auth_token");
 	if (authToken) {
@@ -41,10 +45,9 @@ function CreatePost() {
 			},
 		)
 			.then((response) => response.json())
-			.then((data) => {
-				if (data) {
-					// TODO: check data
-				}
+			.then(data => {
+				console.log(data)
+				navigate("/post/"+data.post._id)
 			})
 			// eslint-disable-next-line
 			.catch((error) => console.log(error));
