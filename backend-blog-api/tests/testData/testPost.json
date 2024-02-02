@@ -1,0 +1,37 @@
+{
+    "author": "65b7ebe9a07fe860160dd948",
+    "title": "VITEST",
+    "thumbnail": "",
+    "content": {
+        "blocks": [
+          {
+            "key": "foo",
+            "text": "Hello, world!",
+            "type": "unstyled",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [],
+            "data": {}
+          },
+          {
+            "key": "bar",
+            "text": "This is a sample Draft.js content.",
+            "type": "unstyled",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [],
+            "data": {}
+          },
+          {
+            "key": "baz",
+            "text": "You can customize it as needed.",
+            "type": "unstyled",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [],
+            "data": {}
+          }
+        ],
+        "entityMap": {}
+      }
+}
