@@ -9,7 +9,7 @@ on:
       - main
 
 env:
-  env_var: ${{ vars.SECRET }}
+  SECRET: ${{ secrets.SECRET }}
 
 jobs:
   build:
