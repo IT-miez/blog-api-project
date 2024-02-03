@@ -100,7 +100,7 @@ exports.user_login_post = [
   async (req, res, next) => {
     const user = await User.findOne({ username: req.body.username });
     if (!user) {
-      return res.status(403).json({ msg: 'Invalid credentials' });
+      return res.status(404).json({ msg: 'Invalid credentials' });
     }
     bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
       if (err) throw err;
@@ -116,7 +116,7 @@ exports.user_login_post = [
             expiresIn: '1d',
           },
           (err, token) => {
-            res.json({ success: true, token, message: 'ok' });
+            res.status(200).json({ success: true, token, message: 'ok' });
           },
         );
       } else {
