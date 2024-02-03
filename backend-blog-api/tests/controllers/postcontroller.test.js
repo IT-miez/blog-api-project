@@ -41,8 +41,6 @@ describe('GET /user/login', () => {
     await User.insertMany(newAccount)
 
     const newAccount_plaintext = testUser_plaintext
-    console.log(newAccount_plaintext)
-    console.log(newAccount[0])
 
     const response = await request(app)
       .post('/user/login')
@@ -52,7 +50,6 @@ describe('GET /user/login', () => {
     expect(response.status).toEqual(200)
     expect(response.body.token)
 
-    console.log()
 
   });
 });
