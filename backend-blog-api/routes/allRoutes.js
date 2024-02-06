@@ -44,6 +44,6 @@ router.post('/post/:postid/update', jwtExtract, passport.authenticate('jwt', { s
 
 router.delete('/post/:postid/delete', jwtExtract, passport.authenticate('jwt', { session: false }), postController.delete_post);
 
-router.post('/comment/create',jwtExtract, passport.authenticate('jwt', { session: false }), postController.post_add_comment);
+router.post('/comment/create', jwtExtract, passport.authenticate('jwt', { session: false }), postController.post_add_comment);
 
 module.exports = router;

@@ -24,9 +24,8 @@ exports.post_create_post = asyncHandler(async (req, res, next) => {
 // Update a blogpost
 exports.post_update_post = asyncHandler(async (req, res, next) => {
   const postId = req.params.postid;
-  console.log(postId)
 
-  let post = await Post.findById(postId);
+  const post = await Post.findById(postId);
 
   if (!post) {
     return res.status(404).json({ error: 'Post not found' });
@@ -45,7 +44,6 @@ exports.post_update_post = asyncHandler(async (req, res, next) => {
     post,
   });
 });
-
 
 // Get all posts
 exports.post_get_post = [
@@ -69,9 +67,6 @@ exports.post_get_post = [
 
 // Add comment to a post
 exports.post_add_comment = asyncHandler(async (req, res, next) => {
-
-
-
   const comment = new Comment({
     author: req.body.author,
     post: req.body.post,
@@ -79,7 +74,7 @@ exports.post_add_comment = asyncHandler(async (req, res, next) => {
   });
 
   if (!comment.author || !comment.post || !comment.commentContent) {
-    return res.status(404).json({ message: "Missing author, post, or comment-content" });
+    return res.status(404).json({ message: 'Missing author, post, or comment-content' });
   }
 
   await comment.save();
@@ -130,28 +125,28 @@ exports.delete_post = asyncHandler(async (req, res, next) => {
   try {
     // Delete all comments of the post
     await Comment.deleteMany({ post: postId });
-  
+
     // Delete the post
     const givenPost = await Post.findById(postId).select('author');
-  
+
     if (!givenPost) {
       return res.status(404).json({ message: 'Post not found' });
     }
-  
+
     if (req.token.id === givenPost.author.toString()) {
       const deletedPost = await Post.findByIdAndDelete(postId);
-  
+
       if (!deletedPost) {
         return res.status(404).json({ message: 'Post not found' });
       }
-  
+
       res.status(200).json({ message: 'Post and associated comments deleted successfully' });
     } else {
       res.status(401).json({ msg: 'Unauthorized' });
     }
   } catch (error) {
+    // eslint-disable-next-line
     console.error('Error deleting post and associated comments:', error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-  
 });

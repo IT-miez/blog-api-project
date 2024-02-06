@@ -39,19 +39,17 @@ passport.use(JwtStrategyConfiguration);
 
 mongoose.set('strictQuery', false);
 
-if(process.env.NODE_ENV != "Test") {
+async function main(mongoDB) {
+  await mongoose.connect(mongoDB);
+}
+
+if (process.env.NODE_ENV !== 'Test') {
   const prodDB = process.env.productionDatabase;
   const mongoDB = process.env.MONGODB_URI || prodDB;
-
-  async function main() {
-    await mongoose.connect(mongoDB);
-  }
   // eslint-disable-next-line
   main().catch((err) => console.log(err));
   // MongoDB SETUP DONE
 }
-
-
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -76,7 +74,8 @@ app.use((err, req, res, next) => {
 
   // render the error page
   res.status(err.status || 500);
-  console.error(err)
+  // eslint-disable-next-line
+  console.error(err);
   res.json(err.message);
 });
 
