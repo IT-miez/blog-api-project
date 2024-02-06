@@ -69,11 +69,18 @@ exports.post_get_post = [
 
 // Add comment to a post
 exports.post_add_comment = asyncHandler(async (req, res, next) => {
+
+
+
   const comment = new Comment({
     author: req.body.author,
     post: req.body.post,
     commentContent: req.body.comment,
   });
+
+  if (!comment.author || !comment.post || !comment.commentContent) {
+    return res.status(404).json({ message: "Missing author, post, or comment-content" });
+  }
 
   await comment.save();
 
