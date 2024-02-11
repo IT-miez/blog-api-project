@@ -28,7 +28,7 @@ jobs:
     - name: Run tests
       run: npm test --prefix backend-blog-api
   tag_release:
-    needs: [simple_deployment_pipeline]
+    needs: [build]
     runs-on: ubuntu-20.04
     steps:
     - name: Bump version and push tag
