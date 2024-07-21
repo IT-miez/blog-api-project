@@ -1,19 +1,19 @@
-# fly.toml app configuration file generated for blog-api-project on 2024-07-21T12:57:29+03:00
+# fly.toml app configuration file generated for blog-api-project-young-log-1285 on 2024-07-21T13:25:54+03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'blog-api-project'
+app = 'blog-api-project-young-log-1285'
 primary_region = 'ams'
 
 [build]
 
 [env]
+  BACKEND_URL = 'https://blog-api-backend-g3af.onrender.com/'
   PORT = '8080'
-  BACKEND_URL='http://backend:5000'
 
 [http_service]
-  internal_port = 8080
+  internal_port = 80
   force_https = true
   auto_stop_machines = true
   auto_start_machines = true
