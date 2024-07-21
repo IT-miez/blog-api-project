@@ -1,4 +1,9 @@
 
+:root {
+    color-scheme: dark;
+}
+
+
 .login-form {
     display: flex;
     flex-direction: column;

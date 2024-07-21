@@ -1,5 +1,9 @@
 
 
+:root {
+    color-scheme: dark;
+}
+
 .register-form {
     display: flex;
     flex-direction: column;

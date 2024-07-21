@@ -34,10 +34,13 @@ const Navbar = () => {
 		button1 = <button onClick={logoutButton}>Logout</button>;
 		button2 = "";
 		information = (
-			<h2>
-				Hello
-				{tokenInformation.username}
-			</h2>
+			<div>
+				<h2 className="username-hello">
+					Hello,
+				</h2>
+				<p className="username-box">{tokenInformation.username}</p>
+			</div>
+			
 		);
 		profileButton =			(
 			<Link to={`/profile/${tokenInformation.id}`}>
@@ -45,30 +48,37 @@ const Navbar = () => {
 			</Link>
 		);
 
-		createPostButton =			<Link to="/post/create"><button className="profile-button">Create Post</button></Link>;
+		createPostButton =			<Link to="/post/create"><button className="profile-button buttons-black">Create Post</button></Link>;
 	}
 
-	button3 =		(
-		<Link to="/">
-			<button className="profile-button">Posts</button>
-		</Link>
-	);
+	const hasProfileButton = Boolean(profileButton);
+	if(!profileButton) {
+		button3 =		(
+			<Link to="/">
+				<button className="profile-button buttons-black blogsite-centered">Blogsite</button>
+			</Link>
+		);
+	} else {
+		button3 =		(
+			<Link to="/">
+				<button className="profile-button buttons-black">Blogsite</button>
+			</Link>
+		);
+	}
+	
 
 	return (
 		<div>
-			<div className="logo-div">
-				<h1 className="logo">Blogsite</h1>
-			</div>
 			<div className="navbar">
-				{button3}
 				<div className="container">
 					<div>
 						<div className="buttons">
-							{information}
 							{profileButton}
+							{information}
 						</div>
 					</div>
 					<div>
+						{button3}
 						{createPostButton}
 					</div>
 					<div className="buttons">

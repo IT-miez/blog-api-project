@@ -1,4 +1,8 @@
 
+:root {
+    color-scheme: dark;
+}
+
 .shortpost-master {
     display: flex;
     justify-content: center;

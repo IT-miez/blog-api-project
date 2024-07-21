@@ -1,4 +1,8 @@
     /* Login.css*/
+:root {
+    color-scheme: dark;
+}
+
 .login-container {
     border-radius: 5px;
     border: 1px solid black;
