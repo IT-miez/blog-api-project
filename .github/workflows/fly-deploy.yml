@@ -1,13 +1,13 @@
 # See https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/
 
-name: Fly Deploy
+name: Frontend deployment to Fly.io
 on:
   push:
     branches:
       - main
 jobs:
   deploy:
-    name: Deploy app
+    name: Deploy frontend to Fly.io
     runs-on: ubuntu-latest
     concurrency: deploy-group    # optional: ensure only one action runs at a time
     steps:
