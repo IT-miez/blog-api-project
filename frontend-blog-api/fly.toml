@@ -9,7 +9,7 @@ primary_region = 'ams'
 [build]
 
 [env]
-  BACKEND_URL = 'https://blog-api-backend-g3af.onrender.com/'
+  VITE_BACKEND_URL = 'https://blog-api-backend-g3af.onrender.com/'
   PORT = '8080'
 
 [http_service]
