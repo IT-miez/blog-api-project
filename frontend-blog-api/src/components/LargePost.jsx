@@ -18,7 +18,7 @@ function LargePost() {
 	const [postAuthor, setPostAuthor] = useState(null);
 	const [dataFetched, setDataFetched] = useState(false);
 
-	const fetchURL = import.meta.env.VITE_BACKEND_URL | "http://localhost:5000"
+	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
 
 	const authToken = localStorage.getItem("auth_token");
 	let tokenInformation = "";
@@ -29,6 +29,8 @@ function LargePost() {
 	const location = useLocation();
 	const pathnameParts = location.pathname.split("/");
 	const postId = pathnameParts[pathnameParts.length - 1];
+	console.log(`${fetchURL}/post/${postId}`)
+	console.log(`${fetchURL}/comment/${postId}`)
 
 	// Convert draftjs content to HTML
 	// Convert draftjs content to HTML
