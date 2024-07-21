@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy --remote-only --config frontend-blog-api/fly.toml
+      - run: flyctl deploy --remote-only --config frontend-blog-api/fly.toml -a blog-api-project-young-log-1285
         working-directory: ./frontend-blog-api
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
