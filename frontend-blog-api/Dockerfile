@@ -14,6 +14,8 @@ RUN npm run build
 # Stage 2: nginx-server
 FROM nginx:alpine
 
+ENV BACKEND_URL=https://blog-api-backend-g3af.onrender.com/
+
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 

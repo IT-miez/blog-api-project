@@ -9,7 +9,7 @@ function App() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await fetch("http://localhost:5000/post/get");
+				const response = await fetch(`https://blog-api-backend-g3af.onrender.com/post/get`);
 				const result = await response.json();
 
 				setPosts(result.posts);
