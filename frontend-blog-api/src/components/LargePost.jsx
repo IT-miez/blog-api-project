@@ -18,6 +18,8 @@ function LargePost() {
 	const [postAuthor, setPostAuthor] = useState(null);
 	const [dataFetched, setDataFetched] = useState(false);
 
+	const fetchURL = import.meta.env.VITE_BACKEND_URL | "http://localhost:5000"
+
 	const authToken = localStorage.getItem("auth_token");
 	let tokenInformation = "";
 	if (authToken) {
@@ -56,9 +58,9 @@ function LargePost() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await fetch(`http://localhost:5000/post/${postId}`);
+				const response = await fetch(`${fetchURL}/post/${postId}`);
 				const result = await response.json();
-				const response2 = await fetch(`http://localhost:5000/comment/${postId}`);
+				const response2 = await fetch(`${fetchURL}/comment/${postId}`);
 				const result2 = await response2.json();
 
 				const parsedJson = await JSON.parse(result.post.content);

@@ -10,11 +10,13 @@ function Register() {
 	const [password, setPassword] = useState("");
 	const [profileSummary, setProfileSummary] = useState("");
 
+	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
+
 	function fetchUserData(event) {
 		event.preventDefault();
 
 		fetch(
-			"http://localhost:5000/user/register",
+			`${fetchURL}/user/register`,
 			{
 				headers: {
 					"Content-Type": "application/json",

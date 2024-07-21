@@ -4,14 +4,17 @@ import Navbar from "./Navbar";
 import { useNavigate } from "react-router-dom";
 import EditorComponent from "./EditorComponent";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-
 import "../styles/createpost.css";
 
 import parseJwt from "../utils/parseJwt";
 import { Navigate } from "react-router-dom";
 
+
+
 function CreatePost() {
 	const navigate = useNavigate();
+
+	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
 
 	let tokenInformation = "";
 	const authToken = localStorage.getItem("auth_token");
@@ -30,7 +33,7 @@ function CreatePost() {
 		givenEditorState = convertToRaw(givenEditorState.getCurrentContent());
 
 		fetch(
-			"http://localhost:5000/post/create",
+			`${fetchURL}/post/create`,
 			{
 				headers: {
 					"Content-Type": "application/json",

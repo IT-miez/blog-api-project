@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 import parseJwt from "../utils/parseJwt";
 
+
 function CreateComment() {
 	const { postid } = useParams();
 	const [commentData, setCommentData] = useState("");
@@ -11,11 +12,13 @@ function CreateComment() {
 	const authToken = localStorage.getItem("auth_token");
 	const tokenInformation = parseJwt(authToken);
 
+	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
+
 	function sendComment(event) {
 		event.preventDefault();
 
 		fetch(
-			"http://localhost:5000/comment/create",
+			`${fetchURL}/comment/create`,
 			{
 				method: "POST",
 				headers: {

@@ -4,7 +4,6 @@ import Navbar from "./Navbar";
 import EditorComponent from "./EditorComponent";
 import { useLocation } from "react-router-dom";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-
 import "../styles/createpost.css";
 
 import parseJwt from "../utils/parseJwt";
@@ -13,6 +12,8 @@ function EditPost() {
     const [editorState, setEditorState] = useState();
 	const [errorArray, setErrorArray] = useState([]);
 	const [title, setTitle] = useState("");
+
+	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
 
 	let tokenInformation = "";
 	const authToken = localStorage.getItem("auth_token");
@@ -28,7 +29,7 @@ function EditPost() {
         const fetchData = async () => {
           try {
             const response = await fetch(
-                `http://localhost:5000/post/${postId}`,
+                `${fetchURL}/post/${postId}`,
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -58,7 +59,7 @@ function EditPost() {
 		givenEditorState = convertToRaw(givenEditorState.getCurrentContent());
 
 		fetch(
-			`http://localhost:5000/post/${postId}/update`,
+			`${fetchURL}/post/${postId}/update`,
 			{
 				headers: {
 					"Content-Type": "application/json",

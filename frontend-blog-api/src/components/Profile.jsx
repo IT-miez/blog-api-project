@@ -6,9 +6,12 @@ import "../styles/shortpost.css";
 
 import parseJwt from "../utils/parseJwt";
 
+
 const Profile = () => {
 	const [profileData, setProfileData] = useState();
 	const [userPosts, setUserPosts] = useState("");
+
+	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -17,7 +20,7 @@ const Profile = () => {
 			const userid = tokenInformation.id;
 
 			try {
-				const response = await fetch(`http://localhost:5000/profile/${userid}`);
+				const response = await fetch(`${fetchURL}/profile/${userid}`);
 				const result = await response.json();
 
 				setProfileData(result);
@@ -27,7 +30,7 @@ const Profile = () => {
 			}
 
 			try {
-				const allPosts = await fetch(`http://localhost:5000/profile/${userid}/posts`);
+				const allPosts = await fetch(`${fetchURL}/profile/${userid}/posts`);
 				const allPostsResult = await allPosts.json();
 
 				if (allPostsResult.length > 0) {

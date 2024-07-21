@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import parseJwt from "../utils/parseJwt";
 
+
 function AuthorButtons({
 	postId, currentUser, postAuthor, onDelete, onEdit,
 }) {
@@ -10,13 +11,15 @@ function AuthorButtons({
 
 	const navigate = useNavigate();
 
+	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
+
 	const authToken = localStorage.getItem("auth_token");
 	const [confirmed, setConfirmed] = useState(false);
 	const handleDelete = async () => {
 		if (window.confirm("Are you sure you want to delete this post?")) {
 			// User confirmed deletion
 			try {
-				const response = await fetch(`http://localhost:5000/post/${postId}/delete`, {
+				const response = await fetch(`${fetchURL}/post/${postId}/delete`, {
 					method: "DELETE",
 					headers: {
 						"Content-Type": "application/json",

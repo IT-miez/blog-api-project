@@ -2,6 +2,7 @@ import "../index.css";
 import "../styles/login.css";
 import Navbar from "./Navbar";
 
+
 function Login() {
 	function storeToken(token) {
 		localStorage.setItem("auth_token", token);
@@ -10,11 +11,13 @@ function Login() {
 	function fetchUserData(event) {
 		event.preventDefault();
 
+		const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
+
 		const givenUsername = document.querySelector("input[name=\"username\"]").value;
 		const givenPassword = document.querySelector("input[name=\"password\"]").value;
 
 		fetch(
-			"http://localhost:5000/user/login",
+			`${fetchURL}/user/login`,
 			{
 				headers: {
 					"Content-Type": "application/json",

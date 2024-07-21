@@ -6,10 +6,14 @@ import ShortPost from "./components/ShortPost";
 function App() {
 	const [posts, setPosts] = useState([]);
 
+	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
+	console.log(import.meta.env.VITE_BACKEND_URL)
+	console.log(`${fetchURL}/post/get`)
+
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await fetch(`https://blog-api-backend-g3af.onrender.com/post/get`);
+				const response = await fetch(`${fetchURL}/post/get`);
 				const result = await response.json();
 
 				setPosts(result.posts);
