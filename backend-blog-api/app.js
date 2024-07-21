@@ -47,10 +47,9 @@ if (process.env.NODE_ENV !== 'Test') {
   const prodDB = process.env.productionDatabase;
   const mongoDB = process.env.MONGODB_URI || prodDB;
   // eslint-disable-next-line
-  main().catch((err) => console.log(err));
+  main(mongoDB).catch((err) => console.log(err));
   // MongoDB SETUP DONE
 }
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

@@ -1,0 +1,26 @@
+version: '3.8'
+
+networks:
+  docker_network:
+    driver: bridge
+
+services:
+  backend:
+    build:
+      context: ./backend-blog-api
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      - docker_network
+  
+  frontend:
+    build:
+      context: ./frontend-blog-api
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    environment:
+      - BACKEND_URL=http://backend:5000
+    networks:
+      - docker_network
