@@ -17,7 +17,10 @@ Soon will be added that no updates can be pushed if tests don't pass on the new 
 
 ![Main Page (not login as user)](image.png)
 
-## Version: 0.8 (30.01.2023)
+## Version: 0.8.1 (21.07.2024)
+Added live-version of the site.</br>
+
+## Version: 0.8 (30.01.2024)
 Most of the functionalities done.</br>
 Home page shows all posts sorted by most recently made.</br>
 User can register and login.</br>
