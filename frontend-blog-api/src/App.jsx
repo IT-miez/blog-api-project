@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import Navbar from "./components/Navbar.jsx";
+import Navbar from "./components/Navbar";
 import ShortPost from "./components/ShortPost";
 
 function App() {
