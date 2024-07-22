@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches: [main]
-    types: [opened, synchronize]
 
 env:
   SECRET: ${{ secrets.SECRET }}
@@ -27,11 +24,3 @@ jobs:
 
     - name: Run tests
       run: npm test --prefix backend-blog-api
-  tag_release:
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-    - name: Bump version and push tag
-      uses: anothrNick/github-tag-action@1.67.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
