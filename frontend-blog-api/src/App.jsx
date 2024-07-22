@@ -3,6 +3,8 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import ShortPost from "./components/ShortPost";
 
+// Testing imports
+
 function App() {
 	const [posts, setPosts] = useState([]);
 
