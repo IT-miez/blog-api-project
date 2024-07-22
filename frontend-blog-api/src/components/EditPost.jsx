@@ -73,7 +73,17 @@ function EditPost() {
 				}),
 			},
 		)
-			.then((response) => response.json())
+			.then((response) =>  {
+				if(response.status==200) {
+					console.log("redirecting...")
+					const currentUrl = window.location.href;
+					const trimmedUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
+					window.location.href = trimmedUrl;
+				}
+				else {
+					response = response.json()
+				}
+			})
 			.then((data) => {
 				if (data) {
 					// TODO: check data
