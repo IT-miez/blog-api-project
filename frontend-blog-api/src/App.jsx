@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import ShortPost from "./components/ShortPost";
-import SuccessNotification from "./components/SuccessNotification";
 
 // Testing Modal
 import {Modal, ModalOverlay, DialogTrigger, Button as ModalButton, Dialog, Heading} from 'react-aria-components';

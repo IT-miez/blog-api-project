@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import parseJwt from "../utils/parseJwt";
 
-const Navbar = () => {
+export const Navbar = () => {
 	function logoutButton() {
 		localStorage.removeItem("auth_token");
 		window.location.href = "/";
