@@ -71,17 +71,17 @@ const Navbar = () => {
 		<div>
 			<div className="navbar">
 				<div className="container">
-					<div>
-						<div className="buttons">
+					<div className="buttons-left">
+						<div className="buttons buttons-left">
 							{profileButton}
 							{information}
 						</div>
 					</div>
-					<div>
+					<div className="middle-buttons">
 						{button3}
 						{createPostButton}
 					</div>
-					<div className="buttons">
+					<div className="buttons buttons-right">
 						{button1}
 						{button2}
 					</div>

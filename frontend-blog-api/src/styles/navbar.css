@@ -18,28 +18,56 @@
     width: 800px;
     margin: 0 auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
+
+    position: relative;
   }
 
 .buttons button {
-    margin: 10px;
-    padding: 10px 20px;
-    border: none;
-    background-color: #4caf50;
-    color: white;
-    cursor: pointer;
-  }
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+}
 
-  .buttons-black {
-    margin: 10px;
-    padding: 10px 20px;
-    background-color: #1a1a1a;;
-  }
 
-  .blogsite-centered {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.buttons-black {
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: #1a1a1a;;
+}
+
+/* Centering */
+.blogsite-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 0 auto;
+  z-index: 1;
+}
+
+.buttons-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  right: 0;
+  position: absolute;
+}
+
+.buttons-left {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 0;
+}
+
+.middle-buttons {
+  display: flex;
+}

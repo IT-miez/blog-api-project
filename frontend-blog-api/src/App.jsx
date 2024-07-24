@@ -2,10 +2,15 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import ShortPost from "./components/ShortPost";
+import SuccessNotification from "./components/SuccessNotification";
+
+// Testing Modal
+import {Modal, ModalOverlay, DialogTrigger, Button as ModalButton, Dialog, Heading} from 'react-aria-components';
 
 // Testing imports
 
 function App() {
+
 	const [posts, setPosts] = useState([]);
 
 	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
@@ -32,7 +37,7 @@ function App() {
 				<div>
 					<Navbar />
 				</div>
-				<p>No posts found.</p>
+				<p>Loading posts...</p>
 			</div>
 			
 		);
@@ -55,7 +60,7 @@ function App() {
 						/>
 					))
 				) : (
-					<p>Loading posts...</p>
+					<p>No posts found.</p>
 				)}
 			</div>
 		</>

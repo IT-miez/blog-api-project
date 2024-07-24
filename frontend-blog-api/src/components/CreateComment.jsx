@@ -1,18 +1,34 @@
 import "../styles/createcomment.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import parseJwt from "../utils/parseJwt";
+
+import SuccessNotification from "./SuccessNotification";
 
 
 function CreateComment() {
 	const { postid } = useParams();
 	const [commentData, setCommentData] = useState("");
+	const [isOpen, setOpen] = useState(false);
+	const [isRefreshed, setRefresh] = useState(false)
 
 	const authToken = localStorage.getItem("auth_token");
 	const tokenInformation = parseJwt(authToken);
 
 	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	useEffect(() => {
+		if (isRefreshed) {
+			console.log("Redirecting...");
+			window.location.href = '/';
+		}
+	}, [isRefreshed]);
+
 
 	function sendComment(event) {
 		event.preventDefault();
@@ -32,10 +48,19 @@ function CreateComment() {
 				}),
 			},
 		)
-			.then((response) => response.json())
-			.then((data) => {
-				// TODO: Check status code and notify user if unsuccessful, refresh page if successful
-			})
+		.then((response) => {
+			if(response.status==200) {
+				setOpen(true)
+				//window.location.href = '/';
+			}
+			else {
+				response = response.json()
+			}
+			
+		})
+		.then((data) => {
+			// TODO: redirect user on success, error popup on unsuccess
+		})
 			// eslint-disable-next-line
 			.catch((error) => console.log(error));
 	}
@@ -54,7 +79,7 @@ function CreateComment() {
 					<input type="submit" />
 				</form>
 			</div>
-
+			<SuccessNotification openingState={isOpen} setOpen={setOpen} setRefresh={setRefresh} title={"Comment added!"}/>
 		</div>
 	);
 }

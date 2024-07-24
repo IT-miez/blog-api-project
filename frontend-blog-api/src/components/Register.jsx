@@ -3,17 +3,27 @@ import "../styles/register.css";
 import { useState } from "react";
 import { redirect } from "react-router-dom";
 import Navbar from "./Navbar";
+import SuccessNotification from "./SuccessNotification";
 
 function Register() {
 	const [errorArray, setErrorArray] = useState([]);
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [profileSummary, setProfileSummary] = useState("");
+	const [isOpen, setOpen] = useState(true);
 
 	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
 
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+	
 	function fetchUserData(event) {
 		event.preventDefault();
+
+		event.target.disabled = true;
+		
 
 		fetch(
 			`${fetchURL}/user/register`,
@@ -32,6 +42,9 @@ function Register() {
 		)
 			.then((response) => {
 				if(response.status==200) {
+					setOpen(true)
+					sleep(2000)
+					
 					console.log("redirecting...")
 					window.location.href = '/';
 				}
@@ -82,6 +95,7 @@ function Register() {
 							<p />
 						)}
 					</div>
+					<SuccessNotification openingState={isOpen} setOpen={setOpen}/>
 				</div>
 			</div>
 		</div>
