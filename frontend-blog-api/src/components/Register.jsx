@@ -1,6 +1,6 @@
 import "../index.css";
 import "../styles/register.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { redirect } from "react-router-dom";
 import Navbar from "./Navbar";
 import SuccessNotification from "./SuccessNotification";
