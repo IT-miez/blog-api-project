@@ -110,7 +110,7 @@ function LargePost() {
 				{commentList ? (
 					commentList.length > 0 ? (
 						commentList.map((item) => (
-							<div key={crypto.randomUUID()} className="comment-box">
+							<div key={item._id} className="comment-box">
 								<h4 className="comment-header">
 									{item.author.username}
 								</h4>

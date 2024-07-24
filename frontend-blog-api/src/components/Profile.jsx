@@ -22,7 +22,6 @@ const Profile = () => {
 			try {
 				const response = await fetch(`${fetchURL}/profile/${userid}`);
 				const result = await response.json();
-				console.log(result)
 				setProfileData(result);
 			} catch (error) {
 				// eslint-disable-next-line
@@ -78,10 +77,12 @@ const Profile = () => {
 						<h2>Bio:</h2>
 						<p>{profileData.user.profileSummary}</p>
 					</div>
-					<div className="profile-inner-container">
-						<p>
+					<div className="profile-inner-container profile-inner-container-creationdate">
+						<p className="profile-text">
 							Creation date:
-							{profileData.user.createdAtFormatted}
+						</p>
+						<p className="profile-text">
+							{profileData.user.creationDateFormatted}
 						</p>
 					</div>
 				</div>
