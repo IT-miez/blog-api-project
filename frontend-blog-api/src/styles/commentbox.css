@@ -7,7 +7,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 40px;
 
     margin-top: 40px;
 }
@@ -18,10 +18,20 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: start;
-    gap: 5px;
-    width: 500px;
-    background-color: grey;
-
-    border-radius: 15px;
+    gap: px;
+    width: 300px;
+    background-color: rgb(109, 109, 109);
+    border: 3px solid rgb(224, 224, 224);
+    border-radius: 10px;
     padding: 10px;
+}
+
+.comment-header {
+    font-size: 1.2rem;
+}
+
+.comment-content {
+    background-color: rgb(88, 88, 88);
+    padding: 10px;
+    border-radius: 5px;
 }

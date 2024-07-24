@@ -22,7 +22,7 @@ const Profile = () => {
 			try {
 				const response = await fetch(`${fetchURL}/profile/${userid}`);
 				const result = await response.json();
-
+				console.log(result)
 				setProfileData(result);
 			} catch (error) {
 				// eslint-disable-next-line
@@ -67,7 +67,7 @@ const Profile = () => {
 		}
 		return null;
 	}
-
+	console.log(profileData)
 	return (
 		<div>
 			<Navbar />
@@ -81,7 +81,7 @@ const Profile = () => {
 					<div className="profile-inner-container">
 						<p>
 							Creation date:
-							{profileData.user.createdAt}
+							{profileData.user.createdAtFormatted}
 						</p>
 					</div>
 				</div>

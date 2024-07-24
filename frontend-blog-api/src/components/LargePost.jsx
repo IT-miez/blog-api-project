@@ -82,7 +82,7 @@ function LargePost() {
 
 		fetchData(); // Call the fetchData function
 	}, []);
-
+	console.log(commentList)
 	return (
 		<div>
 			<Navbar />
@@ -111,7 +111,7 @@ function LargePost() {
 					commentList.length > 0 ? (
 						commentList.map((item) => (
 							<div key={crypto.randomUUID()} className="comment-box">
-								<h4>
+								<h4 className="comment-header">
 									{item.author.username}
 								</h4>
 								<p className="comment-content">

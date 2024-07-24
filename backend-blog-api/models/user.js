@@ -12,9 +12,17 @@ const UserSchema = new Schema({
 
 UserSchema.virtual('url').get(() => `/users/${this._id}`);
 
-UserSchema.virtual('creationDate_formatted').get(function formatCreationDate() {
-  return this.creationDate ? DateTime.fromJSDate(this.creationDate).toLocaleString(DateTime.DATE_MED) : '';
+UserSchema.virtual('creationDateFormatted').get(function formatCreationDate() {
+  return this.createdAt ? DateTime.fromJSDate(this.createdAt).toLocaleString(DateTime.DATE_MED) : '';
 });
 
+// Virtual for data formatting for createdAt
+UserSchema.virtual('createdAtFormatted').get(function createdAtFormatted() {
+  const date = this.createdAt;
+  const formattedDate = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+  return formattedDate;
+});
+
+UserSchema.set('toJSON', { virtuals: true });
 // Export model
 module.exports = mongoose.model('User', UserSchema);

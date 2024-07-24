@@ -10,7 +10,8 @@ function Register() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [profileSummary, setProfileSummary] = useState("");
-	const [isOpen, setOpen] = useState(true);
+	const [isOpen, setOpen] = useState(false);
+	const [isRefreshed, setRefresh] = useState(false)
 
 	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
 
@@ -95,7 +96,7 @@ function Register() {
 							<p />
 						)}
 					</div>
-					<SuccessNotification openingState={isOpen} setOpen={setOpen}/>
+					<SuccessNotification openingState={isOpen} setOpen={setOpen} setRefresh={setRefresh}/>
 				</div>
 			</div>
 		</div>

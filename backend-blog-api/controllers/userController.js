@@ -132,7 +132,7 @@ exports.user_profile = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.params.userid).exec();
 
   if (user) {
-    res.json({
+    res.status(200).json({
       user,
     });
   } else {
