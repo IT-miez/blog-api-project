@@ -16,6 +16,13 @@ function Register() {
 	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
 
 
+	useEffect(() => {
+		if (isRefreshed) {
+			console.log("Redirecting...");
+			window.location.href = '/';
+		}
+	}, [isRefreshed]);
+
 	function sleep(ms) {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	}
