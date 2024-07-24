@@ -19,8 +19,9 @@ function App() {
 		const fetchData = async () => {
 			try {
 				const response = await fetch(`${fetchURL}/post/get`);
+				console.log(`${fetchURL}/post/get`)
 				const result = await response.json();
-
+				console.log(result.posts)
 				setPosts(result.posts);
 			} catch (error) {
 				// eslint-disable-next-line

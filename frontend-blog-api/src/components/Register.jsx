@@ -23,9 +23,6 @@ function Register() {
 		}
 	}, [isRefreshed]);
 
-	function sleep(ms) {
-		return new Promise(resolve => setTimeout(resolve, ms));
-	}
 	
 	function fetchUserData(event) {
 		event.preventDefault();

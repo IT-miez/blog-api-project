@@ -12,8 +12,9 @@ const UserSchema = new Schema({
 
 UserSchema.virtual('url').get(() => `/users/${this._id}`);
 
-UserSchema.virtual('creationDateFormatted').get(function formatCreationDate() {
-  return this.createdAt ? DateTime.fromJSDate(this.createdAt).toLocaleString(DateTime.DATE_MED) : '';
+
+UserSchema.virtual('creationDate_formatted').get(function formatCreationDate() {
+  return this.creationDate ? DateTime.fromJSDate(this.creationDate).toLocaleString(DateTime.DATE_MED) : '';
 });
 
 // Virtual for data formatting for createdAt

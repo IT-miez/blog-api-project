@@ -54,7 +54,7 @@ exports.post_get_post = [
       const allPosts = await Post.find({})
         .populate('author', 'username') // Add fields you want for the author
         .select('author title createdAt').sort({ createdAt: 'desc' }); // Select the fields you want for the post
-      res.status(200).json({
+      res.json({
         posts: allPosts,
       });
     } catch (error) {
