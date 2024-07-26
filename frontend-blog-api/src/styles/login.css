@@ -3,6 +3,9 @@
     color-scheme: dark;
 }
 
+.login-container {
+    color: white;
+}
 
 .login-form {
     display: flex;

@@ -5,7 +5,7 @@ import { redirect } from "react-router-dom";
 import Navbar from "./Navbar";
 import SuccessNotification from "./SuccessNotification";
 
-function Register() {
+export function Register() {
 	const [errorArray, setErrorArray] = useState([]);
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
@@ -107,4 +107,4 @@ function Register() {
 	);
 }
 
-export default Register;
+export default Register

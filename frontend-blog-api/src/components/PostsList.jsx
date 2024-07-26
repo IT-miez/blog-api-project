@@ -33,4 +33,5 @@ export function PostsList() {
 	);
 }
 
-export default PostsList;
+
+export default PostsList

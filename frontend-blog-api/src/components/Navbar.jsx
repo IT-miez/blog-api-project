@@ -40,7 +40,7 @@ export const Navbar = () => {
 				</h2>
 				<p className="username-box">{tokenInformation.username}</p>
 			</div>
-			
+
 		);
 		profileButton =			(
 			<Link to={`/profile/${tokenInformation.id}`}>
@@ -52,7 +52,7 @@ export const Navbar = () => {
 	}
 
 	const hasProfileButton = Boolean(profileButton);
-	if(!profileButton) {
+	if (!profileButton) {
 		button3 =		(
 			<Link to="/">
 				<button className="profile-button buttons-black blogsite-centered">Blogsite</button>
@@ -65,7 +65,6 @@ export const Navbar = () => {
 			</Link>
 		);
 	}
-	
 
 	return (
 		<div>

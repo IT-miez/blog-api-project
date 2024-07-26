@@ -7,7 +7,7 @@ import "../styles/shortpost.css";
 import parseJwt from "../utils/parseJwt";
 
 
-const Profile = () => {
+export const Profile = () => {
 	const [profileData, setProfileData] = useState();
 	const [userPosts, setUserPosts] = useState("");
 
@@ -96,4 +96,4 @@ const Profile = () => {
 	);
 };
 
-export default Profile;
+export default Profile

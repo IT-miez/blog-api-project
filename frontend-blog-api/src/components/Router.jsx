@@ -36,8 +36,8 @@ const router = createBrowserRouter([
 	},
 	{
 		path: "/post/:postid/edit",
-		element: <EditPost />
-	}
+		element: <EditPost />,
+	},
 ]);
 
 const Router = () => <RouterProvider router={router} />;

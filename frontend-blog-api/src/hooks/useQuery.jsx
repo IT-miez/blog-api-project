@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
-
+// eslint-disable-next-line no-use-before-define
 const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
 
 export default function useQuery(url) {
