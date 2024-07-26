@@ -7,6 +7,12 @@
     color: white;
 }
 
+.login-wrapper {
+    background-color: #333;
+    width: inherit;
+    padding: 10px;
+}
+
 .login-form {
     display: flex;
     flex-direction: column;

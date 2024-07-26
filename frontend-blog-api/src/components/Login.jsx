@@ -70,7 +70,7 @@ function Login() {
 	return (
 		<div className="login-container">
 			<Navbar />
-
+			<div className="login-wrapper">
 				<ThemeProvider theme={darkTheme}>
 					<Container component="main" maxWidth="xs">
 						<Box
@@ -126,6 +126,8 @@ function Login() {
 						</Box>
 					</Container>
 				</ThemeProvider>
+				</div>
+				
 		</div>
 	);
 }
