@@ -81,8 +81,7 @@ function Login() {
 							alignItems: 'center',
 						}}
 						>
-						<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-						</Avatar>
+						<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}  src="../assets/veikkomo.png" />
 						<Typography component="h1" variant="h5"> 
 							Log in
 						</Typography>
