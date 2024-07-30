@@ -81,14 +81,14 @@ function Login() {
 							alignItems: 'center',
 						}}
 						>
-						<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}  src="../assets/veikkomo.png" />
+						<Avatar sx={{ m: 1, bgcolor: 'blue' }}  src="/veikkomo.png" />
 						<Typography component="h1" variant="h5"> 
 							Log in
 						</Typography>
 						<Box component="form"onSubmit={fetchUserData} noValidate sx={{ mt: 3 }}>
 							<Grid container spacing={2}>
 							<Grid item xs={12} sx={{color: "white"}}>
-								<TextField
+								<TextField sx={{backgroundColor: "#242424"}}
 								autoComplete="given-name"
 								name="username"
 								required
@@ -101,7 +101,7 @@ function Login() {
 								/>
 							</Grid>
 							<Grid sx={{color: "white"}} item xs={12}>
-								<TextField
+								<TextField sx={{backgroundColor: "#242424"}}
 								required
 								fullWidth
 								name="password"

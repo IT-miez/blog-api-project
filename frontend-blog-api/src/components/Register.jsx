@@ -1,9 +1,29 @@
 import "../index.css";
-import "../styles/register.css";
+import "../styles/login.css";
 import { useState, useEffect } from "react";
 import { redirect } from "react-router-dom";
 import Navbar from "./Navbar";
 import SuccessNotification from "./SuccessNotification";
+
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const darkTheme = createTheme({
+	palette: {
+	  mode: 'dark',
+	},
+  });
+  
 
 export function Register() {
 	const [errorArray, setErrorArray] = useState([]);
@@ -65,43 +85,115 @@ export function Register() {
 			.catch((error) => console.log(error));
 	}
 
+	/*
+		<h1>Register</h1>
+		<hr />
+		<div>
+			<form className="login-information" onSubmit={fetchUserData}>
+				<div>
+					<label>Username</label>
+					<input type="text" name="username" id="username" required value={username} onChange={(event) => { setUsername(event.target.value); }} />
+				</div>
+				<br />
+				<div>
+					<label>Password</label>
+					<input type="text" name="password" id="password" required value={password} onChange={(event) => { setPassword(event.target.value); }} />
+				</div>
+				<br />
+				<div>
+					<label>Profile bio</label>
+					<input type="textfield" name="profile_summary" id="profile_summary" value={profileSummary} onChange={(event) => { setProfileSummary(event.target.value); }} />
+				</div>
+				<input type="submit" className="submit-button" />
+			</form>
+			<div>
+				{errorArray ? (
+					<ul>
+						{errorArray.map((element) => (
+							<li key={crypto.randomUUID()}>{element.msg}</li>
+						))}
+					</ul>
+				) : (
+					<p />
+				)}
+			</div>
+			<SuccessNotification openingState={isOpen} setOpen={setOpen} setRefresh={setRefresh}/>
+		</div>
+*/
+
 	return (
 		<div className="login-container">
 			<Navbar />
-			<div className="register-form">
-				<h1>Register</h1>
-				<hr />
-				<div>
-					<form className="login-information" onSubmit={fetchUserData}>
-						<div>
-							<label>Username</label>
-							<input type="text" name="username" id="username" required value={username} onChange={(event) => { setUsername(event.target.value); }} />
-						</div>
-						<br />
-						<div>
-							<label>Password</label>
-							<input type="text" name="password" id="password" required value={password} onChange={(event) => { setPassword(event.target.value); }} />
-						</div>
-						<br />
-						<div>
-							<label>Profile bio</label>
-							<input type="textfield" name="profile_summary" id="profile_summary" value={profileSummary} onChange={(event) => { setProfileSummary(event.target.value); }} />
-						</div>
-						<input type="submit" className="submit-button" />
-					</form>
-					<div>
-						{errorArray ? (
-							<ul>
-								{errorArray.map((element) => (
-									<li key={crypto.randomUUID()}>{element.msg}</li>
-								))}
-							</ul>
-						) : (
-							<p />
-						)}
-					</div>
-					<SuccessNotification openingState={isOpen} setOpen={setOpen} setRefresh={setRefresh}/>
-				</div>
+			<div className="login-wrapper">
+				
+				
+				<ThemeProvider theme={darkTheme}>
+					<Container component="main" maxWidth="xs">
+						<Box
+						sx={{
+							marginTop: 8,
+							display: 'flex',
+							flexDirection: 'column',
+							alignItems: 'center',
+						}}
+						>
+						<Avatar sx={{ m: 1, bgcolor: 'blue' }}  src="/veikkomo.png" />
+						<Typography component="h1" variant="h5"> 
+							Register
+						</Typography>
+						<Box component="form"onSubmit={fetchUserData} noValidate sx={{ mt: 3 }}>
+							<Grid container spacing={2}>
+							<Grid item xs={12} sx={{color: "white"}}>
+								<TextField sx={{backgroundColor: "#242424"}}
+								autoComplete="given-name"
+								name="username"
+								required
+								fullWidth
+								id="username"
+								label="Username"
+								value={username}
+								onChange={(event) => { setUsername(event.target.value); }}
+								autoFocus
+								/>
+							</Grid>
+							<Grid sx={{color: "white"}} item xs={12}>
+								<TextField sx={{backgroundColor: "#242424"}}
+								required
+								fullWidth
+								name="password"
+								label="Password"
+								type="password"
+								id="password"
+								autoComplete="new-password"
+								value={password}
+								onChange={(event) => { setPassword(event.target.value); }}
+								/>
+							</Grid>
+							<Grid sx={{color: "white"}} item xs={12}>
+								<TextField sx={{backgroundColor: "#242424"}}
+								required
+								fullWidth
+								name="profile-bio"
+								label="Profile Bio"
+								id="profile-bio"
+								value={profileSummary}
+								onChange={(event) => { setProfileSummary(event.target.value); }}
+								/>
+							</Grid>
+							</Grid>
+							<Button
+							type="submit"
+							fullWidth
+							variant="contained"
+							sx={{ mt: 3, mb: 2 }}
+							>
+							Log in
+							</Button>
+						</Box>
+						</Box>
+					</Container>
+				</ThemeProvider>
+				<SuccessNotification openingState={isOpen} setOpen={setOpen} setRefresh={setRefresh}/>
 			</div>
 		</div>
 	);
