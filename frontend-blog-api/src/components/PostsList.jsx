@@ -8,7 +8,6 @@ import useQuery from "../hooks/useQuery";
 export function PostsList() {
 	const { data, loading, error, refetch} = useQuery("/post/get")
     
-	console.log(data?.posts)
 
 	if (loading) {
 		return <div><p>Loading posts...</p></div>;

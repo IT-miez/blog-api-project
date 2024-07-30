@@ -66,7 +66,7 @@ export const Profile = () => {
 		}
 		return null;
 	}
-	console.log(profileData)
+	
 	return (
 		<div>
 			<Navbar />
