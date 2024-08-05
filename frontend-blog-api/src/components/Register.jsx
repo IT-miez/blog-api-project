@@ -17,6 +17,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { registerRequest } from "../api/userRequests";
 
 const darkTheme = createTheme({
 	palette: {
@@ -33,13 +34,13 @@ export function Register() {
 	const [isOpen, setOpen] = useState(false);
 	const [isRefreshed, setRefresh] = useState(false)
 
-	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
+	//const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
 
 
 	useEffect(() => {
 		if (isRefreshed) {
 			console.log("Redirecting...");
-			window.location.href = '/';
+			window.location.href = '/login';
 		}
 	}, [isRefreshed]);
 
@@ -49,7 +50,17 @@ export function Register() {
 
 		event.target.disabled = true;
 		
-
+		registerRequest(username, password, profileSummary)
+		.then(() => {
+			setOpen(true)
+			setTimeout(() => {
+				console.log("redirecting...")
+				window.location.href = "/login";
+			}, 2000)	
+					
+		})
+		.catch((error) => {console.log(error.message)})
+		/*
 		fetch(
 			`${fetchURL}/user/register`,
 			{
@@ -83,6 +94,7 @@ export function Register() {
 			})
 			// eslint-disable-next-line
 			.catch((error) => console.log(error));
+			*/
 	}
 
 	/*

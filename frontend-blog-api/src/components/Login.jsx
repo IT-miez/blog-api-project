@@ -15,6 +15,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import tokens from "../constants/tokens"
+import { loginRequest } from "../api/userRequests";
 
 const darkTheme = createTheme({
   palette: {
@@ -30,42 +32,17 @@ function Login() {
 	const [password, setPassword] = useState("");
 
 	function storeToken(token) {
-		localStorage.setItem("auth_token", token);
+		localStorage.setItem(tokens.auth_token, token);
 	}
 
 	function fetchUserData(event) {
 		event.preventDefault();
 
-		const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
-
-
-
-		fetch(
-			`${fetchURL}/user/login`,
-			{
-				headers: {
-					"Content-Type": "application/json",
-				},
-				method: "POST",
-				body: JSON.stringify({
-					username,
-					password,
-				}),
-			},
-		)
-			.then((response) => response.json())
-			.then((data) => {
-				if (data.token) {
-					storeToken(data.token);
-					window.location.href = "/";
-				} else {
-					// eslint-disable-next-line
-					console.log("Error?");
-				}
-			})
-			// eslint-disable-next-line
-			.catch((error) => console.log(error));
+		loginRequest(username, password)
+		.then(() => {window.location.href = "/";})
+		.catch((error) => {console.log(error.message)})
 	}
+			
 
 	return (
 		<div className="login-container">

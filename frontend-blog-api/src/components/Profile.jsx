@@ -5,6 +5,7 @@ import "../styles/profile.css";
 import "../styles/shortpost.css";
 
 import parseJwt from "../utils/parseJwt";
+import { profilePostsRequest, profileRequest } from "../api/profileRequests";
 
 
 export const Profile = () => {
@@ -13,6 +14,7 @@ export const Profile = () => {
 
 	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
 
+	
 	useEffect(() => {
 		const fetchData = async () => {
 			const authToken = localStorage.getItem("auth_token");
@@ -20,17 +22,15 @@ export const Profile = () => {
 			const userid = tokenInformation.id;
 
 			try {
-				const response = await fetch(`${fetchURL}/profile/${userid}`);
-				const result = await response.json();
-				setProfileData(result);
+				const response = await profileRequest(userid);
+				setProfileData(response);
 			} catch (error) {
 				// eslint-disable-next-line
 				console.error("Error fetching data:", error);
 			}
 
 			try {
-				const allPosts = await fetch(`${fetchURL}/profile/${userid}/posts`);
-				const allPostsResult = await allPosts.json();
+				const allPostsResult = await profilePostsRequest(userid);
 
 				if (allPostsResult.length > 0) {
 					setUserPosts(allPostsResult);
@@ -41,10 +41,12 @@ export const Profile = () => {
 				// eslint-disable-next-line
 				console.error("Error fetching all posts of a user:", error);
 			}
-		};
+		}
 
 		fetchData();
+		
 	}, []);
+	
 
 	function showPosts() {
 		if (userPosts) {
