@@ -1,4 +1,4 @@
-import "../index.css"; // Import a CSS file to style the component¨
+import "../index.css";
 import "../styles/navbar.css";
 import { Link } from "react-router-dom";
 
@@ -55,13 +55,13 @@ export const Navbar = () => {
 	if (!profileButton) {
 		button3 =		(
 			<Link to="/">
-				<button className="profile-button buttons-black blogsite-centered">Blogsite</button>
+				<button id="blogsite-button" className="blogsite-button">Blogsite</button>
 			</Link>
 		);
 	} else {
 		button3 =		(
 			<Link to="/">
-				<button className="profile-button buttons-black">Blogsite</button>
+				<button id="blogsite-button" className="blogsite-button">Blogsite</button>
 			</Link>
 		);
 	}
@@ -72,15 +72,15 @@ export const Navbar = () => {
 				<div className="container">
 					<div className="buttons-left">
 						<div className="buttons buttons-left">
-							{profileButton}
+							{button3}
 							{information}
 						</div>
 					</div>
 					<div className="middle-buttons">
-						{button3}
 						{createPostButton}
 					</div>
 					<div className="buttons buttons-right">
+						{profileButton}
 						{button1}
 						{button2}
 					</div>

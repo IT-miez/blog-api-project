@@ -25,7 +25,8 @@ function CreateComment() {
 	useEffect(() => {
 		if (isRefreshed) {
 			console.log("Redirecting...");
-			window.location.href = '/';
+			location.reload();
+			//window.location.href = '/';
 		}
 	}, [isRefreshed]);
 
@@ -72,11 +73,11 @@ function CreateComment() {
 					<div>
 						<label htmlFor="comment">Add comment</label>
 						<br />
-						<textarea type="text" name="comment" id="comment" required value={commentData} onChange={(event) => (setCommentData(event.target.value))} />
+						<textarea type="text" name="comment" id="comment" maxLength={420} required value={commentData} onChange={(event) => (setCommentData(event.target.value))} />
 
 					</div>
 					<br />
-					<input type="submit" />
+					<input type="submit" className="submit-button" />
 				</form>
 			</div>
 			<SuccessNotification openingState={isOpen} setOpen={setOpen} setRefresh={setRefresh} title={"Comment added!"}/>

@@ -27,6 +27,19 @@
     background-color: grey;
 }
 
+.profile-bio-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: start;
+    width: 400px;
+    left: 0;
+    background-color: grey;
+    padding: 10px;
+    border-radius: 15px;
+    word-break: break-word;
+}
+
 .profile-inner-container-creationdate {
     display: flex;
     flex: 1;

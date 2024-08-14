@@ -84,51 +84,54 @@ function LargePost() {
 	return (
 		<div>
 			<Navbar />
-			<div className="largepost-outer-wrapper">
-				{postContent === null ? (
-					<p>Loading post...</p>
-				) : (
-					<div>
-						<h1>{title}</h1>
-						<div className="largepost-wrapper" dangerouslySetInnerHTML={{ __html: postContent }} />
-					</div>
-					
-				)}
-			</div>
-			<div>
-				{dataFetched && (
-					<AuthorButtons
-						postId={postId}
-						currentUser={tokenInformation.id}
-						postAuthor={postAuthor}
-					/>
-				)}
-			</div>
-			<div className="comment-box-wrapper">
-				{commentList ? (
-					commentList.length > 0 ? (
-						commentList.map((item) => (
-							<div key={item._id} className="comment-box">
-								<h4 className="comment-header">
-									{item.author.username}
-								</h4>
-								<p className="comment-content">
-									{item.commentContent}
-								</p>
-								<p>
-									{item.createdAtFormatted}
-								</p>
-							</div>
-
-						))
+			<div className="postpage-wrapper">
+				<div className="largepost-outer-wrapper">
+					{postContent === null ? (
+						<p>Loading post...</p>
 					) : (
-						<p>No items to display.</p>
-					)
-				) : (
-					<p>Loading comments...</p>
-				)}
+						<div>
+							<h1>{title}</h1>
+							<div className="largepost-wrapper" dangerouslySetInnerHTML={{ __html: postContent }} />
+						</div>
+						
+					)}
+				</div>
+				<div>
+					{dataFetched && (
+						<AuthorButtons
+							postId={postId}
+							currentUser={tokenInformation.id}
+							postAuthor={postAuthor}
+						/>
+					)}
+				</div>
+				<div className="comment-box-wrapper">
+					{commentList ? (
+						commentList.length > 0 ? (
+							commentList.map((item) => (
+								<div key={item._id} className="comment-box">
+									<h4 className="comment-header">
+										{item.author.username}
+									</h4>
+									<p className="comment-content">
+										{item.commentContent}
+									</p>
+									<p>
+										{item.createdAtFormatted}
+									</p>
+								</div>
+
+							))
+						) : (
+							<p>No items to display.</p>
+						)
+					) : (
+						<p>Loading comments...</p>
+					)}
+				</div>
+				{tokenInformation && <CreateComment />}
 			</div>
-			{tokenInformation && <CreateComment />}
+			
 		</div>
 	);
 }

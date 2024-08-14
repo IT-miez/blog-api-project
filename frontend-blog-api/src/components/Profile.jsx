@@ -75,7 +75,7 @@ export const Profile = () => {
 			{profileData ? (
 				<div className="profile-container">
 					<h1>{profileData.user.username}</h1>
-					<div className="profile-inner-container">
+					<div className="profile-bio-container">
 						<h2>Bio:</h2>
 						<p>{profileData.user.profileSummary}</p>
 					</div>

@@ -3,7 +3,8 @@
 }
 
 .comment-container {
-    margin-top: 20px;
+    width: 762px;
+    margin-top: 40px;
     padding: 5px;
     border-radius: 10px;
     background-color: #4b4a4a;
@@ -23,3 +24,21 @@ input["type=submit"] {
     border-radius: 10px;
     padding: 5px;
 }
+
+.submit-button {
+    font-size: 1rem;
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #2d9430;
+    color: white;
+    cursor: pointer;
+    border-radius: 15px;
+  }
+
+  textarea {
+    resize: none;
+    width: 500px;
+    height: 100px;
+    padding: 5px;
+  }

@@ -6,6 +6,7 @@ import EditorComponent from "./EditorComponent";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "../styles/createpost.css";
 
+
 import parseJwt from "../utils/parseJwt";
 import { Navigate } from "react-router-dom";
 
@@ -63,7 +64,7 @@ function CreatePost() {
 			// Render something when JWT token exists
 				<div>
 					<Navbar />
-					<div className="login-container">
+					<div className="createpost-container">
 						<h1>Create Post</h1>
 						<hr />
 						<div>
@@ -77,7 +78,7 @@ function CreatePost() {
 									<label>Text</label>
 									<EditorComponent editorState={editorState} setEditorState={setEditorState} />
 								</div>
-								<input type="submit" />
+								<input type="submit" className="submit-button" />
 							</form>
 						</div>
 					</div>
