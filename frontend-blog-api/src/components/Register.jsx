@@ -19,6 +19,9 @@ import Container from '@mui/material/Container';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { registerRequest } from "../api/userRequests";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const darkTheme = createTheme({
 	palette: {
 	  mode: 'dark',
@@ -59,7 +62,23 @@ export function Register() {
 			}, 2000)	
 					
 		})
-		.catch((error) => {console.log(error.message)})
+		.catch((error) => {
+			error = JSON.parse(error.request.response); 
+			console.log(error.msg)
+			for (let i = 0; i < error.errors.length; i++) {
+				//console.log(error.errors[i].msg);
+				toast(error.errors[i].msg, {
+					position: "bottom-right",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: false,
+					progress: undefined,
+					theme: "dark",
+					});
+			}
+		})
 		/*
 		fetch(
 			`${fetchURL}/user/register`,
@@ -199,12 +218,13 @@ export function Register() {
 							variant="contained"
 							sx={{ mt: 3, mb: 2 }}
 							>
-							Log in
+							Register
 							</Button>
 						</Box>
 						</Box>
 					</Container>
 				</ThemeProvider>
+				<ToastContainer />
 				<SuccessNotification openingState={isOpen} setOpen={setOpen} setRefresh={setRefresh}/>
 			</div>
 		</div>

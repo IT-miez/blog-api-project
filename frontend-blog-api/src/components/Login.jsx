@@ -19,6 +19,9 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import tokens from "../constants/tokens"
 import { loginRequest } from "../api/userRequests";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -41,7 +44,20 @@ function Login() {
 
 		loginRequest(username, password)
 		.then(() => {window.location.href = "/";})
-		.catch((error) => {console.log(error.message)})
+		.catch((error) => {
+			error = JSON.parse(error.request.response);
+			console.log(error.msg)
+			toast(error.msg, {
+				position: "bottom-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: false,
+				progress: undefined,
+				theme: "dark",
+				});
+		})
 	}
 			
 
@@ -104,6 +120,7 @@ function Login() {
 						</Box>
 					</Container>
 				</ThemeProvider>
+				<ToastContainer />
 				</div>
 				
 		</div>

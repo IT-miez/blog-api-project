@@ -19,7 +19,7 @@ exports.index = asyncHandler(async (req, res, next) => {
   });
 });
 
-// Handle book create on POST.
+// Handle user create on POST.
 exports.user_create_post = [
   // Validate and sanitize fields.
   body('username', 'Username must not be empty.')
@@ -59,8 +59,7 @@ exports.user_create_post = [
         // There are errors. Render form again with sanitized values/error messages.
 
           res.status(402).json({
-            title: 'Failed to create account',
-            user: newUser,
+            msg: 'Failed to create account',
             errors: errors.array(),
           });
         } else {
@@ -68,8 +67,7 @@ exports.user_create_post = [
           await newUser.save();
           // res.redirect(newUser.url);
           res.json({
-            title: 'Account created',
-            user: newUser,
+            msg: 'Account created',
             errors: errors.array(),
           });
         }
@@ -88,11 +86,11 @@ exports.user_login_post = [
     .trim()
     .isLength({ min: 1 })
     .escape(),
-  body('password', 'Password must not be empty.')
+  body('password', 'Password must be longer than 4 characters.')
     .trim()
     .isLength({ min: 4 })
     .escape(),
-  body('profileSummary', 'Profile summary must not be empty.')
+  body('profileSummary', 'Profile summary must be longer than 5 characters.')
     .trim()
     .isLength({ min: 5 })
     .escape(),
