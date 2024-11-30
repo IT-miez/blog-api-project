@@ -12,8 +12,8 @@ const ShortPost = ({
 			<div className="shortpost-wrapper" id={postId}>
 				<div className="shortpost-left">
 					<div className="shortpost-left-inner">
-						<p className="author-text">{author}</p>
 						<p className="title-text">{title}</p>
+						<p className="author-text">{author}</p>
 					</div>
 					<div />
 				</div>

@@ -58,3 +58,10 @@
 .profile-text {
     font-size: 0.8rem;
 }
+
+.profile-your-posts-container {
+    margin-top: 20px;
+    flex-direction: column;
+    display: flex;
+    gap: 20px;
+}

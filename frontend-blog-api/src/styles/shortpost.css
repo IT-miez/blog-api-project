@@ -7,13 +7,15 @@
 
 .shortpost-master {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .shortpost-outer-wrapper {
     display: flex;
     flex-direction: column;
+    width: 100%;
     gap: 40px;
 }
 
@@ -29,14 +31,17 @@
     box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.7);
     padding: 10px; /* Adjust the value to set the padding */
 
-    width: 600px;
-    max-width: 600px;
+    width: 98%;
+    /*max-width: 600px; */
 }
 
 .shortpost-right {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
+    font-size: 18px;
+    height: 100%;
 }
 
 .shortpost-left {
@@ -50,15 +55,21 @@
 }
 
 .linkclass {
+    display: flex;
+    justify-content: center;
     color: white;
     text-decoration: none;
+    width: 100%;
 }
 
 .title-text {
     font-size: 28px;
+    margin-top: 10px;
+    margin-left: 5px;
 }
 
 .author-text {
     text-align: left;
     font-size: 18px;
+    margin-left: 5px;
 }

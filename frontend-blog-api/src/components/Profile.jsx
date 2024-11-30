@@ -54,14 +54,16 @@ export const Profile = () => {
 				return <p>{userPosts}</p>;
 			} if (userPosts.length > 0) {
 				return (
-					userPosts.map((item) => (
-						<ShortPost
-							key={crypto.randomUUID()}
-							postId={item._id}
-							title={item.title}
-							creationDate={item.createdAtFormatted}
-						/>
-					))
+					<div className="profile-your-posts-container">
+						{userPosts.map((item) => (
+							<ShortPost
+								key={crypto.randomUUID()}
+								postId={item._id}
+								title={item.title}
+								creationDate={item.createdAtFormatted}
+							/>
+						))}
+					</div>
 				);
 			}
 			return <p>No posts available.</p>;
