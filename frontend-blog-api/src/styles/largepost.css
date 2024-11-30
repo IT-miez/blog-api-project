@@ -17,9 +17,8 @@
 }
 
 .largepost-outer-wrapper {
-    width: 762px;
+    width: 100%;
 
-    padding: 20px;
     background-color: #4b4a4a;
     margin-top: 50px;
 
@@ -31,4 +30,8 @@
     padding: 25px;
     font-size: larger;
 
+}
+
+.largepost-post {
+    padding: 20px;
 }

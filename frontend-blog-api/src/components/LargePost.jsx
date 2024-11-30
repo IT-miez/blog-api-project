@@ -89,7 +89,7 @@ function LargePost() {
 					{postContent === null ? (
 						<p>Loading post...</p>
 					) : (
-						<div>
+						<div className="largepost-post">
 							<h1>{title}</h1>
 							<div className="largepost-wrapper" dangerouslySetInnerHTML={{ __html: postContent }} />
 						</div>
@@ -109,6 +109,7 @@ function LargePost() {
 					{commentList ? (
 						commentList.length > 0 ? (
 							commentList.map((item) => (
+								<div className="comment-box-content">
 								<div key={item._id} className="comment-box">
 									<h4 className="comment-header">
 										{item.author.username}
@@ -119,6 +120,7 @@ function LargePost() {
 									<p>
 										{item.createdAtFormatted}
 									</p>
+								</div>
 								</div>
 
 							))

@@ -103,15 +103,14 @@ function EditPost() {
 					<Navbar />
 					<div className="login-container">
 						<h1>Edit Post</h1>
-						<hr />
 						<div>
-							<form className="login-information" onSubmit={fetchPostUpdate}>
+							<form className="edipost-wrapper" onSubmit={fetchPostUpdate}>
 								<br />
 								<div>
 									<label>Text</label>
 									<EditorComponent editorState={editorState} setEditorState={setEditorState} />
 								</div>
-								<input type="submit" />
+								<input type="submit" className="submit-button" />
 							</form>
 						</div>
 					</div>
