@@ -1,7 +1,8 @@
+/*
 :root {
     color-scheme: dark;
 }
-
+*/
 .comment-box-wrapper {
     display: flex;
     flex-direction: column;

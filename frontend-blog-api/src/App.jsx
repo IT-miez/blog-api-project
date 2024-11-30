@@ -1,4 +1,4 @@
-import "./App.css";
+import "./styles/App.css";
 import Navbar from "./components/Navbar";
 
 import PostsList from "./components/PostsList";
