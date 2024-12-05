@@ -14,7 +14,7 @@ export function PostsList() {
 	}
 
 	if (!data?.posts) {
-		return <div><p>No posts found.</p></div>;
+		return <div><p>Please refresh - free hosting of the backend is working slowly.</p></div>;
 	}
 
 	return (
