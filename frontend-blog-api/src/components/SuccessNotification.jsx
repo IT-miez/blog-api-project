@@ -2,7 +2,7 @@ import React from "react";
 import {
 	Modal, Dialog, Heading,
 } from "react-aria-components";
-import "../styles/react-aria-modal/Modal.css";
+import "../styles/Modal.css";
 
 function SuccessNotification({
 	openingState, setOpen, setRefresh, title,

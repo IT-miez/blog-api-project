@@ -6,7 +6,7 @@ const express = require('express');
 const router = express.Router();
 
 // Added cors to all routes
-router.use(cors())
+router.use(cors());
 
 // Requires for all controllers
 const passport = require('passport');
