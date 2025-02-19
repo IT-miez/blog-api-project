@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { EditorState, convertToRaw } from "draft-js";
 import Navbar from "./Navbar";
@@ -6,17 +5,15 @@ import { useNavigate } from "react-router-dom";
 import EditorComponent from "./EditorComponent";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "../styles/createpost.css";
-
-
 import parseJwt from "../utils/parseJwt";
-import { Navigate } from "react-router-dom";
-
-
+import { TextField, Typography, useTheme, Box } from "@mui/material";
 
 function CreatePost() {
 	const navigate = useNavigate();
+	const theme = useTheme();
+	const isDarkMode = theme.palette.mode === "dark";
 
-	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
+	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
 	let tokenInformation = "";
 	const authToken = localStorage.getItem("auth_token");
@@ -25,8 +22,6 @@ function CreatePost() {
 	}
 
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
-
-	const [errorArray, setErrorArray] = useState([]);
 	const [title, setTitle] = useState("");
 
 	function fetchPostCreationData(event) {
@@ -34,56 +29,85 @@ function CreatePost() {
 		let givenEditorState = editorState;
 		givenEditorState = convertToRaw(givenEditorState.getCurrentContent());
 
-		fetch(
-			`${fetchURL}/post/create`,
-			{
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${authToken}`,
-				},
-				method: "POST",
-				body: JSON.stringify({
-					author: tokenInformation.id,
-					title,
-					content: givenEditorState,
-				}),
+		fetch(`${fetchURL}/post/create`, {
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${authToken}`,
 			},
-		)
+			method: "POST",
+			body: JSON.stringify({
+				author: tokenInformation.id,
+				title,
+				content: givenEditorState,
+			}),
+		})
 			.then((response) => response.json())
-			.then(data => {
-				console.log(data)
-				navigate("/post/"+data.post._id)
+			.then((data) => {
+				console.log(data);
+				navigate("/post/" + data.post._id);
 			})
-			// eslint-disable-next-line
 			.catch((error) => console.log(error));
 	}
 
 	return (
-
 		<div>
 			{authToken ? (
-			// Render something when JWT token exists
 				<div>
 					<Navbar />
 					<div className="createpost-container">
-						<h1>Create Post</h1>
+						<Box
+							sx={{
+								padding: 2,
+								backgroundColor: isDarkMode ? "#222" : "#e0e0e0", // Lighter background for light mode
+								borderRadius: 1,
+								width: "95%",
+							}}
+						>
+							<Typography
+								variant="h4"
+								sx={{
+									color: isDarkMode ? "#fff" : "#000", // Explicit color setting
+									textAlign: "center",
+								}}
+							>
+								Create Post
+							</Typography>
+						</Box>
 						<hr />
 						<div>
 							<form className="login-information" onSubmit={fetchPostCreationData}>
 								<div>
-									<label>Title</label>
-									<input type="text" name="username" id="username" required value={title} onChange={(event) => (setTitle(event.target.value))} />
+									<TextField
+										fullWidth
+										variant="outlined"
+										required
+										value={title}
+										onChange={(event) => setTitle(event.target.value)}
+										sx={{
+											backgroundColor: isDarkMode ? "#333" : "#f5f5f5",
+											color: isDarkMode ? "#fff" : "#000",
+											width: "95%",
+										}}
+										label="Title"
+									/>
 								</div>
 								<br />
 								<div>
-									<label>Text</label>
+									<Box sx={{ width: "98%", backgroundColor: "#333", padding: 1, borderRadius: 1 }}>
+										<Typography
+											variant="h6"
+											sx={{ color: isDarkMode ? "#fff" : "#fff", textAlign: "center" }}
+										>
+											Editor
+										</Typography>
+									</Box>
 									<EditorComponent editorState={editorState} setEditorState={setEditorState} />
 								</div>
+
 								<input type="submit" className="submit-button" />
 							</form>
 						</div>
 					</div>
-
 				</div>
 			) : (
 				<div>
@@ -92,7 +116,6 @@ function CreatePost() {
 				</div>
 			)}
 		</div>
-
 	);
 }
 
