@@ -1,5 +1,4 @@
-import { generalRequest, authRequest } from "../utils/network";
-import tokens from "../constants/tokens";
+import { authRequest } from "../utils/network";
 
 export function profileRequest(userid) {
 	return authRequest({ url: `/profile/${userid}` });

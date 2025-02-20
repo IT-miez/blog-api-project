@@ -7,13 +7,12 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "../styles/createpost.css";
 import parseJwt from "../utils/parseJwt";
 import { TextField, Typography, useTheme, Box } from "@mui/material";
+import { fetchURL} from "../constants/fetchURL";
 
 function CreatePost() {
 	const navigate = useNavigate();
 	const theme = useTheme();
 	const isDarkMode = theme.palette.mode === "dark";
-
-	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
 	let tokenInformation = "";
 	const authToken = localStorage.getItem("auth_token");

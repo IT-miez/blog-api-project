@@ -1,6 +1,6 @@
 import "../index.css";
 import "../styles/login.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -29,6 +29,7 @@ export function Register() {
 
 	function fetchUserData(event) {
 		event.preventDefault();
+		// eslint-disable-next-line no-param-reassign
 		event.target.disabled = true;
 
 		registerRequest(username, password, profileSummary)
@@ -47,8 +48,9 @@ export function Register() {
 				}, 3000);
 			})
 			.catch((error) => {
+				// eslint-disable-next-line no-param-reassign
 				error = JSON.parse(error.request.response);
-				error.errors.forEach(err => {
+				error.errors.forEach((err) => {
 					toast.error(err.msg, {
 						position: "bottom-right",
 						autoClose: 5000,
@@ -80,6 +82,7 @@ export function Register() {
 							<Typography component="h1" variant="h5">
 								Register
 							</Typography>
+							{/* eslint-disable-next-line react/jsx-no-bind */}
 							<Box component="form" onSubmit={fetchUserData} noValidate sx={{ mt: 3 }}>
 								<Grid container spacing={2}>
 									<Grid item xs={12}>

@@ -42,8 +42,7 @@
     "@vitejs/plugin-react": "^4.0.3",
     "eslint": "^8.56.0",
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-plugin-react": "^7.33.2",
-    "vite": "^4.4.5"
+    "eslint-plugin-react": "^7.33.2"
   },
   "proxy": "http://localhost:5000"
 }

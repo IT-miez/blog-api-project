@@ -16,7 +16,7 @@ export function registerRequest(username, password, profileSummary) {
 
 /*
 fetch(
-    `${fetchURL}/user/register`,
+    `${fetchURL.js}/user/register`,
     {
         headers: {
             "Content-Type": "application/json",
