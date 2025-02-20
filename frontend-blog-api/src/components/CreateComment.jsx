@@ -1,74 +1,69 @@
 import "../styles/createcomment.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import parseJwt from "../utils/parseJwt";
-import { fetchURL } from "../constants/fetchURL";
-import { Typography, useTheme } from "@mui/material";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
-function CreateComment({ commentReRender, setCommentReRender }) {
+import parseJwt from "../utils/parseJwt";
+
+import SuccessNotification from "./SuccessNotification";
+
+
+function CreateComment() {
 	const { postid } = useParams();
 	const [commentData, setCommentData] = useState("");
-	const theme = useTheme();
-	const isDarkMode = theme.palette.mode === "dark";
+	const [isOpen, setOpen] = useState(false);
+	const [isRefreshed, setRefresh] = useState(false)
+
 	const authToken = localStorage.getItem("auth_token");
 	const tokenInformation = parseJwt(authToken);
+
+	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	useEffect(() => {
+		if (isRefreshed) {
+			console.log("Redirecting...");
+			location.reload();
+			//window.location.href = '/';
+		}
+	}, [isRefreshed]);
+
 
 	function sendComment(event) {
 		event.preventDefault();
 
-		fetch(`${fetchURL}/comment/create`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${authToken}`,
+		fetch(
+			`${fetchURL}/comment/create`,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${authToken}`,
+				},
+				body: JSON.stringify({
+					author: tokenInformation.id,
+					post: postid,
+					comment: commentData,
+				}),
 			},
-			body: JSON.stringify({
-				author: tokenInformation.id,
-				post: postid,
-				comment: commentData,
-			}),
+		)
+		.then((response) => {
+			if(response.status==200) {
+				setOpen(true)
+				//window.location.href = '/';
+			}
+			else {
+				response = response.json()
+			}
+			
 		})
-			.then((response) => {
-				if (response.status === 200) {
-					setCommentReRender(commentReRender + 1);
-					setCommentData("");
-					toast.success("Comment added successfully!", {
-						position: "bottom-right",
-						autoClose: 3000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: false,
-						theme: "dark",
-					});
-				} else {
-					return response.json().then((data) => {
-						toast.error("Failed to add comment. Please try again.", {
-							position: "bottom-right",
-							autoClose: 3000,
-							hideProgressBar: false,
-							closeOnClick: true,
-							pauseOnHover: true,
-							draggable: false,
-							theme: "dark",
-						});
-					});
-				}
-			})
-			.catch((error) => {
-				console.error(error);
-				toast.error("An error occurred. Please try again later.", {
-					position: "bottom-right",
-					autoClose: 3000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: false,
-					theme: "dark",
-				});
-			});
+		.then((data) => {
+			// TODO: redirect user on success, error popup on unsuccess
+		})
+			// eslint-disable-next-line
+			.catch((error) => console.log(error));
 	}
 
 	return (
@@ -76,32 +71,16 @@ function CreateComment({ commentReRender, setCommentReRender }) {
 			<div>
 				<form className="comment-form" onSubmit={sendComment}>
 					<div>
-						<Typography
-							variant="h7"
-							sx={{
-								color: "#fff",
-								textAlign: "center",
-								width: "100%",
-							}}
-						>
-							Add a comment
-						</Typography>
+						<label htmlFor="comment">Add comment</label>
 						<br />
-						<textarea
-							type="text"
-							name="comment"
-							id="comment"
-							maxLength={420}
-							required
-							value={commentData}
-							onChange={(event) => setCommentData(event.target.value)}
-						/>
+						<textarea type="text" name="comment" id="comment" maxLength={420} required value={commentData} onChange={(event) => (setCommentData(event.target.value))} />
+
 					</div>
 					<br />
 					<input type="submit" className="submit-button" />
 				</form>
 			</div>
-			<ToastContainer />
+			<SuccessNotification openingState={isOpen} setOpen={setOpen} setRefresh={setRefresh} title={"Comment added!"}/>
 		</div>
 	);
 }
