@@ -15,8 +15,8 @@ require('dotenv').config();
 const app = express();
 
 // JWT SETUP
-const JwtStrategy = require('passport-jwt').Strategy; const
-  { ExtractJwt } = require('passport-jwt');
+const JwtStrategy = require('passport-jwt').Strategy;
+const { ExtractJwt } = require('passport-jwt');
 
 const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
@@ -40,15 +40,15 @@ passport.use(JwtStrategyConfiguration);
 mongoose.set('strictQuery', false);
 
 async function main(mongoDB) {
-  await mongoose.connect(mongoDB);
+    await mongoose.connect(mongoDB);
 }
 
 if (process.env.NODE_ENV !== 'Test') {
-  const prodDB = process.env.productionDatabase;
-  const mongoDB = process.env.MONGODB_URI || prodDB;
-  // eslint-disable-next-line
-  main(mongoDB).catch((err) => console.log(err));
-  // MongoDB SETUP DONE
+    const prodDB = process.env.productionDatabase;
+    const mongoDB = process.env.MONGODB_URI || prodDB;
+    // eslint-disable-next-line
+    main(mongoDB).catch((err) => console.log(err));
+    // MongoDB SETUP DONE
 }
 app.use(logger('dev'));
 app.use(express.json());
@@ -62,20 +62,20 @@ app.use(cors());
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  next(createError(404));
+    next(createError(404));
 });
 
 // error handler
 app.use((err, req, res, next) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  // eslint-disable-next-line
-  console.error(err);
-  res.json(err.message);
+    // render the error page
+    res.status(err.status || 500);
+    // eslint-disable-next-line
+    console.error(err);
+    res.json(err.message);
 });
 
 module.exports = app;

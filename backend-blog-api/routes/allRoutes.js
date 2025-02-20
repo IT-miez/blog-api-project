@@ -44,12 +44,32 @@ router.get('/comment/:postid', postController.get_comments_of_a_post);
 
 // * * POST routes * *
 // * * POST routes * *
-router.post('/post/create', jwtExtract, passport.authenticate('jwt', { session: false }), postController.post_create_post);
+router.post(
+    '/post/create',
+    jwtExtract,
+    passport.authenticate('jwt', { session: false }),
+    postController.post_create_post
+);
 
-router.post('/post/:postid/update', jwtExtract, passport.authenticate('jwt', { session: false }), postController.post_update_post);
+router.post(
+    '/post/:postid/update',
+    jwtExtract,
+    passport.authenticate('jwt', { session: false }),
+    postController.post_update_post
+);
 
-router.delete('/post/:postid/delete', jwtExtract, passport.authenticate('jwt', { session: false }), postController.delete_post);
+router.delete(
+    '/post/:postid/delete',
+    jwtExtract,
+    passport.authenticate('jwt', { session: false }),
+    postController.delete_post
+);
 
-router.post('/comment/create', jwtExtract, passport.authenticate('jwt', { session: false }), postController.post_add_comment);
+router.post(
+    '/comment/create',
+    jwtExtract,
+    passport.authenticate('jwt', { session: false }),
+    postController.post_add_comment
+);
 
 module.exports = router;

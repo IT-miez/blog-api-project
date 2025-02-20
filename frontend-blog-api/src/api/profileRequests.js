@@ -1,9 +1,9 @@
-import { authRequest } from "../utils/network";
+import { authRequest } from '../utils/network';
 
 export function profileRequest(userid) {
-	return authRequest({ url: `/profile/${userid}` });
+    return authRequest({ url: `/profile/${userid}` });
 }
 
 export function profilePostsRequest(userid) {
-	return authRequest({ url: `/profile/${userid}/posts` });
+    return authRequest({ url: `/profile/${userid}/posts` });
 }

@@ -13,7 +13,6 @@
     margin-top: 80px;
 }
 
-
 .comment-box {
     display: flex;
     flex-direction: column;
@@ -21,7 +20,7 @@
     align-items: start;
     width: 100%;
     background-color: rgb(109, 109, 109);
-    
+
     border: 3px solid rgb(173, 173, 173);
     /* border-radius: 10px; */
 

@@ -37,11 +37,11 @@ input["type=submit"] {
     color: white;
     cursor: pointer;
     /* border-radius: 15px;*/
-  }
+}
 
-  textarea {
+textarea {
     resize: none;
     width: 500px;
     height: 100px;
     padding: 5px;
-  }
+}

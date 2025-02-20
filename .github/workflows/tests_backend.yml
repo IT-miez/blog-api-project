@@ -1,26 +1,26 @@
 name: Unit-test pipeline
 
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 
 env:
-  SECRET: ${{ secrets.SECRET }}
+    SECRET: ${{ secrets.SECRET }}
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
 
-    - name: Use Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '20'
+            - name: Use Node.js
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '20'
 
-    - name: Install dependencies
-      run: npm install --prefix backend-blog-api
+            - name: Install dependencies
+              run: npm install --prefix backend-blog-api
 
-    - name: Run tests
-      run: npm test --prefix backend-blog-api
+            - name: Run tests
+              run: npm test --prefix backend-blog-api
