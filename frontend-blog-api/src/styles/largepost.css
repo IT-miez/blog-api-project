@@ -31,6 +31,13 @@
     font-size: larger;
 }
 
+.largepost-wrapper img {
+    max-width: 100%;
+    height: auto;
+    min-width: 150px;
+    display: block; /* Ensures images don't have unwanted extra spacing */
+}
+
 .largepost-post {
     padding: 20px;
 }
