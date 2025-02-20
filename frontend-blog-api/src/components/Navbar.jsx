@@ -51,6 +51,7 @@ export const Navbar = () => {
 		createPostButton =			<Link to="/post/create"><button className="profile-button buttons-black">Create Post</button></Link>;
 	}
 
+	const hasProfileButton = Boolean(profileButton);
 	if (!profileButton) {
 		button3 =		(
 			<Link to="/">
