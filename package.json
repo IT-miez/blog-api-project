@@ -1,5 +1,15 @@
 {
-  "dependencies": {
-    "luxon": "^3.4.4"
-  }
+    "name": "blog-api-project",
+    "version": "0.8.2",
+    "description": "This project is made while doing the Odin Project.<br>\r It is a simple blog-webpage where you can make an account, log in and make posts and comments to others posts.<br>\r User has a profile page and can add a profile picture.<br>\r Users can delete and edit their posts as well as comments.<br>\r Non-users can see posts but not comment.<br>",
+    "main": "index.js",
+    "scripts": {
+        "prettier": "prettier . --check",
+        "prettierFix": "prettier . --write"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "prettier": "^3.5.1"
+    }
 }

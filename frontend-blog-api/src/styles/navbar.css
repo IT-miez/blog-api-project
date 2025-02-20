@@ -13,35 +13,34 @@
 }
 
 .navbar {
-  margin-bottom: 40px;
-  max-width: 1280px;
+    margin-bottom: 40px;
+    max-width: 1280px;
 }
 
 .container {
-  width: 800px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+    width: 800px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 
-  position: relative;
-  }
-
-.buttons button {
-  margin: 10px;
-  padding: 10px 20px;
-  border: none;
-  background-color: #4caf50;
-  color: white;
-  cursor: pointer;
+    position: relative;
 }
 
+.buttons button {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+}
 
 .buttons-black {
-  margin: 10px;
-  padding: 10px 20px;
-  background-color: #1a1a1a;;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #1a1a1a;
 }
 
 /* Centering */
@@ -57,36 +56,36 @@
   */
 
 .buttons-right {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-  right: 0;
-  position: absolute;
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    right: 0;
+    position: absolute;
 }
 
 .buttons-left {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  left: 0;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
 }
 
 .middle-buttons {
-  display: flex;
-  text-decoration: none;
+    display: flex;
+    text-decoration: none;
 }
 
 a {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 #blogsite-button {
-  font-size: 1.4rem;
-  border-radius: 0;
-  padding-top: 20px;
-  padding-bottom: 20px;
+    font-size: 1.4rem;
+    border-radius: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
 
-  background-color: #39853b
+    background-color: #39853b;
 }
