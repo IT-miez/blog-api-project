@@ -1,5 +1,5 @@
 // ROUTE TEMPLATE FORMAT
-
+/*
 exports.post_creation_template = asyncHandler(async (req, res, next) => {
     // IF CHECK FOR DELETIONS AND EDITS
     // OTHERWISE NOT NEEDED
@@ -25,3 +25,4 @@ exports.post_creation_template = asyncHandler(async (req, res, next) => {
         // user not authorized
     }
 });
+*/

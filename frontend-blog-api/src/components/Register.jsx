@@ -29,7 +29,6 @@ export function Register() {
 
     function fetchUserData(event) {
         event.preventDefault();
-        // eslint-disable-next-line no-param-reassign
         event.target.disabled = true;
 
         registerRequest(username, password, profileSummary)
@@ -51,7 +50,6 @@ export function Register() {
                 }, 3000);
             })
             .catch((error) => {
-                // eslint-disable-next-line no-param-reassign
                 error = JSON.parse(error.request.response);
                 error.errors.forEach((err) => {
                     toast.error(err.msg, {
@@ -87,7 +85,6 @@ export function Register() {
                             <Typography component="h1" variant="h5">
                                 Register
                             </Typography>
-                            {/* eslint-disable-next-line react/jsx-no-bind */}
                             <Box
                                 component="form"
                                 onSubmit={fetchUserData}

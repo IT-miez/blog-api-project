@@ -1,4 +1,3 @@
-import React from 'react';
 import { Modal, Dialog, Heading } from 'react-aria-components';
 import '../styles/Modal.css';
 

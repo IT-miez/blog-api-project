@@ -13,6 +13,7 @@ function EditPost() {
     const [editorState, setEditorState] = useState();
     // const [errorArray, setErrorArray] = useState([]);
     const [title, setTitle] = useState('');
+    setTitle(title);
 
     let tokenInformation = '';
     const authToken = localStorage.getItem('auth_token');
@@ -48,7 +49,7 @@ function EditPost() {
         };
 
         fetchData();
-    }, []);
+    }, );
 
     function fetchPostUpdate(event) {
         event.preventDefault();
@@ -84,7 +85,6 @@ function EditPost() {
                     console.log(data);
                 }
             })
-            // eslint-disable-next-line
             .catch((error) => console.log(error));
     }
 

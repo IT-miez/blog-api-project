@@ -3,15 +3,13 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import parseJwt from '../utils/parseJwt';
 import { fetchURL } from '../constants/fetchURL';
-import { Typography, useTheme } from '@mui/material';
+import { Typography } from '@mui/material';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function CreateComment({ commentReRender, setCommentReRender }) {
     const { postid } = useParams();
     const [commentData, setCommentData] = useState('');
-    const theme = useTheme();
-    const isDarkMode = theme.palette.mode === 'dark';
     const authToken = localStorage.getItem('auth_token');
     const tokenInformation = parseJwt(authToken);
 
@@ -45,6 +43,7 @@ function CreateComment({ commentReRender, setCommentReRender }) {
                     });
                 } else {
                     return response.json().then((data) => {
+                        console.log(data);
                         toast.error(
                             'Failed to add comment. Please try again.',
                             {

@@ -1,8 +1,8 @@
-const { createProxyMiddleware } = require('http-proxy-middleware');
+import { createProxyMiddleware } from 'http-proxy-middleware';
+import { fetchURL } from '../constants/fetchURL';
 
-module.exports = function proxyFunction(app) {
-    // eslint-disable-next-line
-    const target = import.meta.env.VITE_BACKEND_URL || 'localhost:5000';
+export function proxyFunction(app) {
+    const target = fetchURL;
     app.use(
         '/',
         createProxyMiddleware({

@@ -5,17 +5,12 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 
-const bcrypt = require('bcryptjs');
-const session = require('express-session');
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const { hash } = require('bcryptjs');
 require('dotenv').config();
 
 const app = express();
 
 // JWT SETUP
-const JwtStrategy = require('passport-jwt').Strategy;
 const { ExtractJwt } = require('passport-jwt');
 
 const opts = {};
@@ -29,7 +24,6 @@ opts.secretOrKey = process.env.SECRET;
 // MongoDB SETUP
 // Set up mongoose connection
 const mongoose = require('mongoose');
-const User = require('./models/user');
 
 const allRoutesRouter = require('./routes/allRoutes');
 
@@ -46,7 +40,7 @@ async function main(mongoDB) {
 if (process.env.NODE_ENV !== 'Test') {
     const prodDB = process.env.productionDatabase;
     const mongoDB = process.env.MONGODB_URI || prodDB;
-    // eslint-disable-next-line
+     
     main(mongoDB).catch((err) => console.log(err));
     // MongoDB SETUP DONE
 }
@@ -73,7 +67,7 @@ app.use((err, req, res, next) => {
 
     // render the error page
     res.status(err.status || 500);
-    // eslint-disable-next-line
+     
     console.error(err);
     res.json(err.message);
 });

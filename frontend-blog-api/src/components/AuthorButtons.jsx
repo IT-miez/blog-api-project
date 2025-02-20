@@ -11,7 +11,6 @@ function AuthorButtons({ postId, currentUser, postAuthor }) {
     const authToken = localStorage.getItem('auth_token');
     const [confirmed, setConfirmed] = useState(false);
     const handleDelete = async () => {
-        // eslint-disable-next-line no-alert
         if (window.confirm('Are you sure you want to delete this post?')) {
             // User confirmed deletion
             try {
@@ -33,7 +32,6 @@ function AuthorButtons({ postId, currentUser, postAuthor }) {
                     // Redirect to the desired route (e.g., '/')
                 }
             } catch (error) {
-                // eslint-disable-next-line
                 console.error('Error deleting post:', error);
             }
         }

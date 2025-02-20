@@ -35,7 +35,6 @@ function Login() {
                 window.location.href = '/';
             })
             .catch((error) => {
-                // eslint-disable-next-line no-param-reassign
                 error = JSON.parse(error.request.response);
                 toast(error.msg, {
                     position: 'bottom-right',
@@ -70,7 +69,6 @@ function Login() {
                             <Typography component="h1" variant="h5">
                                 Log in
                             </Typography>
-                            {/* eslint-disable-next-line react/jsx-no-bind */}
                             <Box
                                 component="form"
                                 onSubmit={fetchUserData}

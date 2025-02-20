@@ -1,4 +1,4 @@
-const asyncHandler = require('express-async-handler');
+
 const jwt = require('jsonwebtoken');
 
 function extractJWTtoken(req, res, next) {

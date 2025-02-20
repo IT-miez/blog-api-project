@@ -4,7 +4,7 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 export function PostsList() {
-    const { data, loading, error, refetch } = useQuery('/post/get');
+    const { data, loading } = useQuery('/post/get');
 
     if (loading) {
         return (

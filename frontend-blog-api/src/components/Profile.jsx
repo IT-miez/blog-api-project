@@ -3,7 +3,6 @@ import Navbar from './Navbar';
 import ShortPost from './ShortPost';
 import '../styles/profile.css';
 import '../styles/shortpost.css';
-import { fetchURL } from '../constants/fetchURL.js';
 import parseJwt from '../utils/parseJwt';
 import { profilePostsRequest, profileRequest } from '../api/profileRequests';
 
@@ -21,7 +20,6 @@ export const Profile = () => {
                 const response = await profileRequest(userid);
                 setProfileData(response);
             } catch (error) {
-                // eslint-disable-next-line
                 console.error('Error fetching data:', error);
             }
 
@@ -34,7 +32,6 @@ export const Profile = () => {
                     setUserPosts('No posts found. Post your first blog!');
                 }
             } catch (error) {
-                // eslint-disable-next-line
                 console.error('Error fetching all posts of a user:', error);
             }
         };

@@ -60,7 +60,7 @@ exports.post_get_post = [
                 posts: allPosts,
             });
         } catch (error) {
-            // eslint-disable-next-line
+             
             console.error('Error fetching posts:', error);
             throw error;
         }
@@ -153,7 +153,7 @@ exports.delete_post = asyncHandler(async (req, res, next) => {
             res.status(401).json({ msg: 'Unauthorized' });
         }
     } catch (error) {
-        // eslint-disable-next-line
+         
         console.error('Error deleting post and associated comments:', error);
         res.status(500).json({ message: 'Internal Server Error' });
     }

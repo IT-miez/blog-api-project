@@ -1,13 +1,11 @@
 const { body, validationResult } = require('express-validator');
-const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const asyncHandler = require('express-async-handler');
-const LocalStrategyConfiguration = require('../utils/passportSetup');
 const Post = require('../models/post');
 const User = require('../models/user');
 
-exports.index = asyncHandler(async (req, res, next) => {
+module.exports.index = asyncHandler(async (req, res, next) => {
     // Get details of user
     const users = await Promise.all([User.countDocuments({}).exec()]);
 
@@ -18,25 +16,49 @@ exports.index = asyncHandler(async (req, res, next) => {
 });
 
 // Handle user create on POST.
-exports.user_create_post = [
+module.exports.user_create_post = [
     // Validate and sanitize fields.
     body('username', 'Username must not be empty.')
         .trim()
         .isLength({ min: 1 })
         .escape(),
-    body('password', 'Password must not be empty.')
+
+    body('password')
         .trim()
-        .isLength({ min: 4 })
+        .isLength({ min: 6 })
+        .withMessage('Password must be at least 6 characters long.')
+        .matches(/[a-z]/)
+        .withMessage('Password must contain at least one lowercase letter.')
+        .matches(/[A-Z]/)
+        .withMessage('Password must contain at least one uppercase letter.')
+        .matches(/[\W_]/)
+        .withMessage('Password must contain at least one special character.')
         .escape(),
+
     body('profileSummary', 'Profile summary must not be empty.')
         .trim()
         .isLength({ min: 5 })
         .escape(),
-    // Process request after validation and sanitization.
 
-    asyncHandler(async (req, res, next) => {
+    asyncHandler(async (req, res) => {
         const errors = validationResult(req);
 
+        if (!errors.isEmpty()) {
+            return res.status(402).json({
+                msg: 'Failed to create account',
+                errors: errors.array(),
+            });
+        }
+
+        const existingUser = await User.findOne({ username: req.body.username });
+        if (existingUser) {
+            return res.status(400).json({
+                response: 'User already exists with that name',
+                errors: [{ msg: 'User already exists with that name' }],
+            });
+        }
+
+        // If the user doesn't exist, proceed with user creation
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
         const user = new User({
@@ -46,42 +68,16 @@ exports.user_create_post = [
             profileSummary: req.body.profileSummary,
         });
 
-        const findUserByUsername = async (username, newUser) => {
-            try {
-                // Use findOne() to find a user by username
-                const user = await User.findOne({ username });
+        await user.save();
 
-                if (user) {
-                    res.status(400).json({
-                        response: 'User already exists with that name',
-                        userUrl: user.url,
-                    });
-                } else if (!errors.isEmpty()) {
-                    // There are errors. Render form again with sanitized values/error messages.
-
-                    res.status(402).json({
-                        msg: 'Failed to create account',
-                        errors: errors.array(),
-                    });
-                } else {
-                    // Data from form is valid. Save book.
-                    await newUser.save();
-                    // res.redirect(newUser.url);
-                    res.json({
-                        msg: 'Account created',
-                        errors: errors.array(),
-                    });
-                }
-            } catch (error) {
-                // eslint-disable-next-line
-                console.error('Error:', error.message);
-            }
-        };
-        findUserByUsername(req.body.username, user);
+        return res.json({
+            msg: 'Account created successfully',
+        });
     }),
 ];
 
-exports.user_login_post = [
+
+module.exports.user_login_post = [
     // Validate and sanitize fields.
     body('username', 'Username must not be empty.')
         .trim()
@@ -153,7 +149,7 @@ exports.user_all_posts = asyncHandler(async (req, res, next) => {
             .exec();
         res.status(200).json(posts);
     } catch (error) {
-        // eslint-disable-next-line
+         
         console.error('Error fetching all posts of a user:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }

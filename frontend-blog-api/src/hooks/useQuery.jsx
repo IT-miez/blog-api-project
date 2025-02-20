@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-// eslint-disable-next-line no-use-before-define
 import { fetchURL } from '../constants/fetchURL.js';
 
 export default function useQuery(url) {

@@ -49,13 +49,12 @@ function LargePost() {
                 setDataFetched(true);
                 setCommentList(commentlistJSON);
             } catch (error) {
-                // eslint-disable-next-line
                 console.error('Error fetching data:', error);
             }
         };
 
         fetchData(); // Call the fetchData function
-    }, [commentReRender]);
+    }, [commentReRender, postId]);
     return (
         <div>
             <Navbar />
@@ -85,11 +84,10 @@ function LargePost() {
                     )}
                 </div>
                 <div className="comment-box-wrapper">
-                    {/* eslint-disable-next-line no-nested-ternary */}
                     {commentList ? (
                         commentList.length > 0 ? (
-                            commentList.map((item) => (
-                                <div className="comment-box-content">
+                            commentList.map((item, index) => (
+                                <div key={index} className="comment-box-content">
                                     <div key={item._id} className="comment-box">
                                         <h4 className="comment-header">
                                             {item.author.username}
