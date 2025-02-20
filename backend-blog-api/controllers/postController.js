@@ -1,11 +1,10 @@
 const asyncHandler = require('express-async-handler');
-const jwt = require('jsonwebtoken');
-const { body, validationResult } = require('express-validator');
+// const { body, validationResult } = require('express-validator');
 const Comment = require('../models/comment');
 const Post = require('../models/post');
 
 // Create a blogpost
-exports.post_create_post = asyncHandler(async (req, res, next) => {
+module.exports.post_create_post = asyncHandler(async (req, res) => {
     const post = new Post({
         author: req.token.id,
         title: req.body.title,
@@ -22,7 +21,7 @@ exports.post_create_post = asyncHandler(async (req, res, next) => {
 });
 
 // Update a blogpost
-exports.post_update_post = asyncHandler(async (req, res, next) => {
+module.exports.post_update_post = asyncHandler(async (req, res) => {
     const postId = req.params.postid;
 
     const post = await Post.findById(postId);
@@ -48,8 +47,8 @@ exports.post_update_post = asyncHandler(async (req, res, next) => {
 });
 
 // Get all posts
-exports.post_get_post = [
-    asyncHandler(async (req, res, next) => {
+module.exports.post_get_post = [
+    asyncHandler(async (req, res) => {
         try {
             // Fetch posts with specified fields
             const allPosts = await Post.find({})
@@ -68,7 +67,7 @@ exports.post_get_post = [
 ];
 
 // Add comment to a post
-exports.post_add_comment = asyncHandler(async (req, res, next) => {
+module.exports.post_add_comment = asyncHandler(async (req, res) => {
     const comment = new Comment({
         author: req.body.author,
         post: req.body.post,
@@ -89,12 +88,12 @@ exports.post_add_comment = asyncHandler(async (req, res, next) => {
     });
 });
 
-exports.post_test = asyncHandler(async (req, res, next) => {
+module.exports.post_test = asyncHandler(async (req, res) => {
     res.status(200).send('Works');
 });
 
 // Display details of a post
-exports.get_post_content = asyncHandler(async (req, res, next) => {
+module.exports.get_post_content = asyncHandler(async (req, res) => {
     const post = await Post.findById(req.params.postid).exec();
 
     if (post) {
@@ -109,7 +108,7 @@ exports.get_post_content = asyncHandler(async (req, res, next) => {
 });
 
 // Get all comments of a post
-exports.get_comments_of_a_post = asyncHandler(async (req, res, next) => {
+module.exports.get_comments_of_a_post = asyncHandler(async (req, res) => {
     const postId = req.params.postid;
 
     try {
@@ -119,13 +118,13 @@ exports.get_comments_of_a_post = asyncHandler(async (req, res, next) => {
             .populate('author');
         res.status(200).json(comments);
     } catch (error) {
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: error });
     }
 });
 
 // Delete a post based on id
 // Delete all comments related to that post
-exports.delete_post = asyncHandler(async (req, res, next) => {
+module.exports.delete_post = asyncHandler(async (req, res) => {
     const postId = req.params.postid;
 
     try {

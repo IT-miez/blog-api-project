@@ -5,7 +5,7 @@ const asyncHandler = require('express-async-handler');
 const Post = require('../models/post');
 const User = require('../models/user');
 
-module.exports.index = asyncHandler(async (req, res, next) => {
+module.exports.index = asyncHandler(async (req, res) => {
     // Get details of user
     const users = await Promise.all([User.countDocuments({}).exec()]);
 
@@ -92,7 +92,7 @@ module.exports.user_login_post = [
         .isLength({ min: 5 })
         .escape(),
     // Process request after validation and sanitization.
-    async (req, res, next) => {
+    async (req, res) => {
         const user = await User.findOne({ username: req.body.username });
         if (!user) {
             return res.status(404).json({ msg: 'Invalid credentials' });
@@ -126,7 +126,7 @@ module.exports.user_login_post = [
 ];
 
 // Display details of user
-exports.user_profile = asyncHandler(async (req, res, next) => {
+module.exports.user_profile = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.userid).exec();
 
     if (user) {
@@ -141,7 +141,7 @@ exports.user_profile = asyncHandler(async (req, res, next) => {
 });
 
 // Get all posts of a user
-exports.user_all_posts = asyncHandler(async (req, res, next) => {
+module.exports.user_all_posts = asyncHandler(async (req, res) => {
     try {
         // Find all comments for the given post ID, sort them by createdAt
         const posts = await Post.find({ author: req.params.userid })
