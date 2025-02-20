@@ -5,18 +5,13 @@ import { useState } from "react";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { ToastContainer, toast } from "react-toastify";
-import tokens from "../constants/tokens";
 import { loginRequest } from "../api/userRequests";
 
 import Navbar from "./Navbar";
@@ -32,18 +27,14 @@ function Login() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 
-	function storeToken(token) {
-		localStorage.setItem(tokens.auth_token, token);
-	}
-
 	function fetchUserData(event) {
 		event.preventDefault();
 
 		loginRequest(username, password)
 			.then(() => { window.location.href = "/"; })
 			.catch((error) => {
+				// eslint-disable-next-line no-param-reassign
 				error = JSON.parse(error.request.response);
-				console.log(error.msg);
 				toast(error.msg, {
 					position: "bottom-right",
 					autoClose: 5000,
@@ -75,6 +66,7 @@ function Login() {
 							<Typography component="h1" variant="h5">
 								Log in
 							</Typography>
+							{/* eslint-disable-next-line react/jsx-no-bind */}
 							<Box component="form" onSubmit={fetchUserData} noValidate sx={{ mt: 3 }}>
 								<Grid container spacing={2}>
 									<Grid item xs={12} sx={{ color: "white" }}>

@@ -1,19 +1,18 @@
-import { useState, useEffect } from "react";
-import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
+import { useEffect, useState } from "react";
+import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
+import { useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import EditorComponent from "./EditorComponent";
-import { useLocation } from "react-router-dom";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "../styles/createpost.css";
+import { fetchURL } from "../constants/fetchURL";
 
 import parseJwt from "../utils/parseJwt";
 
 function EditPost() {
-    const [editorState, setEditorState] = useState();
-	const [errorArray, setErrorArray] = useState([]);
+	const [editorState, setEditorState] = useState();
+	// const [errorArray, setErrorArray] = useState([]);
 	const [title, setTitle] = useState("");
-
-	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
 
 	let tokenInformation = "";
 	const authToken = localStorage.getItem("auth_token");
@@ -21,37 +20,36 @@ function EditPost() {
 		tokenInformation = parseJwt(authToken);
 	}
 
-    const location = useLocation();
+	const location = useLocation();
 	const pathnameParts = location.pathname.split("/");
 	const postId = pathnameParts[pathnameParts.length - 2];
 
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await fetch(
-                `${fetchURL}/post/${postId}`,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${authToken}`,
-                    },
-                    method: "GET",
-                },
-            )
-            const data = await response.json();
-            let contentState = convertFromRaw(JSON.parse(data.post.content))
-            
-            setEditorState(EditorState.createWithContent(contentState))
-            console.log(editorState)
-            // Handle fetched data
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        };
-    
-        fetchData();
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const response = await fetch(
+					`${fetchURL}/post/${postId}`,
+					{
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${authToken}`,
+						},
+						method: "GET",
+					},
+				);
+				const data = await response.json();
+				const contentState = convertFromRaw(JSON.parse(data.post.content));
 
-      }, []);
+				setEditorState(EditorState.createWithContent(contentState));
+
+				// Handle fetched data
+			} catch (error) {
+				console.error("Error fetching data:", error);
+			}
+		};
+
+		fetchData();
+	}, []);
 
 	function fetchPostUpdate(event) {
 		event.preventDefault();
@@ -73,21 +71,18 @@ function EditPost() {
 				}),
 			},
 		)
-			.then((response) =>  {
-				if(response.status==200) {
-					console.log("redirecting...")
+			.then((response) => {
+				if (response.status == 200) {
 					const currentUrl = window.location.href;
-					const trimmedUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
-					window.location.href = trimmedUrl;
-				}
-				else {
-					response = response.json()
+					window.location.href = currentUrl.substring(0, currentUrl.lastIndexOf("/"));
+				} else {
+					response = response.json();
 				}
 			})
 			.then((data) => {
 				if (data) {
 					// TODO: check data
-					console.log(data)
+					console.log(data);
 				}
 			})
 			// eslint-disable-next-line
@@ -119,7 +114,7 @@ function EditPost() {
 			) : (
 				<div>
 					<Navbar />
-					<h2>Users who aren't logged in cannot edit a post</h2>
+					<h2>Users who are not logged in cannot edit a post</h2>
 				</div>
 			)}
 		</div>

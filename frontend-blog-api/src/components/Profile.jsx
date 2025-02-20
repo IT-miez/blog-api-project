@@ -3,18 +3,14 @@ import Navbar from "./Navbar";
 import ShortPost from "./ShortPost";
 import "../styles/profile.css";
 import "../styles/shortpost.css";
-
+import { fetchURL } from "../constants/fetchURL.js";
 import parseJwt from "../utils/parseJwt";
 import { profilePostsRequest, profileRequest } from "../api/profileRequests";
-
 
 export const Profile = () => {
 	const [profileData, setProfileData] = useState();
 	const [userPosts, setUserPosts] = useState("");
 
-	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
-
-	
 	useEffect(() => {
 		const fetchData = async () => {
 			const authToken = localStorage.getItem("auth_token");
@@ -41,12 +37,10 @@ export const Profile = () => {
 				// eslint-disable-next-line
 				console.error("Error fetching all posts of a user:", error);
 			}
-		}
+		};
 
 		fetchData();
-		
 	}, []);
-	
 
 	function showPosts() {
 		if (userPosts) {
@@ -70,7 +64,7 @@ export const Profile = () => {
 		}
 		return null;
 	}
-	
+
 	return (
 		<div>
 			<Navbar />
@@ -100,4 +94,4 @@ export const Profile = () => {
 	);
 };
 
-export default Profile
+export default Profile;

@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import draftToHtml from "draftjs-to-html"; // Import draftjs-to-html
 // import { EditorState, convertFromRaw } from "draft-js";
+import {Typography, useTheme} from "@mui/material";
 import Navbar from "./Navbar";
 import CreateComment from "./CreateComment";
-
 import parseJwt from "../utils/parseJwt";
-
+import { fetchURL } from "../constants/fetchURL";
 import "../styles/largepost.css";
 import "../styles/commentbox.css";
 import AuthorButtons from "./AuthorButtons";
@@ -17,11 +17,11 @@ function LargePost() {
 	const [commentList, setCommentList] = useState(null);
 	const [postAuthor, setPostAuthor] = useState(null);
 	const [dataFetched, setDataFetched] = useState(false);
-
-	const fetchURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"
-
+	const theme = useTheme();
+	const isDarkMode = theme.palette.mode === "dark";
 	const authToken = localStorage.getItem("auth_token");
 	let tokenInformation = "";
+	const [commentReRender, setCommentReRender] = useState(0);
 	if (authToken) {
 		tokenInformation = parseJwt(authToken);
 	}
@@ -30,48 +30,22 @@ function LargePost() {
 	const pathnameParts = location.pathname.split("/");
 	const postId = pathnameParts[pathnameParts.length - 1];
 
-	// Convert draftjs content to HTML
-	// Convert draftjs content to HTML
-	/*
-    const convertContentToHtml = (rawContent) => {
-        console.log('Raw content:');
-        console.log(rawContent);
-        if (!rawContent) return ''; // Return empty string if content is null or undefined
-
-        // Convert raw content to ContentState
-        const contentState = convertFromRaw({
-            blocks: rawContent.blocks,
-            entityMap: rawContent.entityMap || {},
-        });
-        console.log(contentState)
-        // Create EditorState from ContentState
-        const editorState = EditorState.createWithContent(contentState);
-        console.log(editorState)
-        // Convert EditorState to HTML using draftToHtml
-        let convertedVersion = draftToHtml(editorState.getCurrentContent())
-        console.log("Converted version:")
-        console.log(convertedVersion)
-        return convertedVersion;
-      };
-      */
-
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				const response = await fetch(`${fetchURL}/post/${postId}`);
 				const result = await response.json();
-				const response2 = await fetch(`${fetchURL}/comment/${postId}`);
-				const result2 = await response2.json();
+				const commentlistResponse = await fetch(`${fetchURL}/comment/${postId}`);
+				const commentlistJSON = await commentlistResponse.json();
 
 				const parsedJson = await JSON.parse(result.post.content);
 
 				setPostAuthor(result.post.author);
-				setTitle(result.post.title)
+				setTitle(result.post.title);
 				const modifiedContent = draftToHtml(parsedJson);
 				setPostContent(modifiedContent);
 				setDataFetched(true);
-				const juttu = result2;
-				setCommentList(juttu);
+				setCommentList(commentlistJSON);
 			} catch (error) {
 				// eslint-disable-next-line
 				console.error("Error fetching data:", error);
@@ -79,8 +53,7 @@ function LargePost() {
 		};
 
 		fetchData(); // Call the fetchData function
-	}, []);
-	console.log(commentList)
+	}, [commentReRender]);
 	return (
 		<div>
 			<Navbar />
@@ -93,7 +66,7 @@ function LargePost() {
 							<h1>{title}</h1>
 							<div className="largepost-wrapper" dangerouslySetInnerHTML={{ __html: postContent }} />
 						</div>
-						
+
 					)}
 				</div>
 				<div>
@@ -106,34 +79,46 @@ function LargePost() {
 					)}
 				</div>
 				<div className="comment-box-wrapper">
+					{/* eslint-disable-next-line no-nested-ternary */}
 					{commentList ? (
 						commentList.length > 0 ? (
 							commentList.map((item) => (
 								<div className="comment-box-content">
-								<div key={item._id} className="comment-box">
-									<h4 className="comment-header">
-										{item.author.username}
-									</h4>
-									<p className="comment-content">
-										{item.commentContent}
-									</p>
-									<p>
-										{item.createdAtFormatted}
-									</p>
-								</div>
+									<div key={item._id} className="comment-box">
+										<h4 className="comment-header">
+											{item.author.username}
+										</h4>
+										<p className="comment-content">
+											{item.commentContent}
+										</p>
+										<p>
+											{item.createdAtFormatted}
+										</p>
+									</div>
 								</div>
 
 							))
 						) : (
-							<p>No items to display.</p>
+							<Typography
+								variant="h6"
+								sx={{ color: isDarkMode ? "#fff" : "#fff",
+									textAlign: "center",
+									backgroundColor: "#333",
+									width: "100%",
+									paddingTop: "5px",
+									paddingBottom: "5px",
+							}}
+							>
+								Comments
+							</Typography>
 						)
 					) : (
 						<p>Loading comments...</p>
 					)}
 				</div>
-				{tokenInformation && <CreateComment />}
+				{tokenInformation && <CreateComment commentReRender={commentReRender} setCommentReRender={setCommentReRender} />}
 			</div>
-			
+
 		</div>
 	);
 }
