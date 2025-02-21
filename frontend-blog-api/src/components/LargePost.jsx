@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useLocation } from 'react-router-dom';
-import draftToHtml from 'draftjs-to-html'; // Import draftjs-to-html
-// import { EditorState, convertFromRaw } from "draft-js";
+import draftToHtml from 'draftjs-to-html';
 import { Typography, useTheme } from '@mui/material';
 import Navbar from './Navbar';
 import CreateComment from './CreateComment';
@@ -11,118 +10,100 @@ import '../styles/largepost.css';
 import '../styles/commentbox.css';
 import AuthorButtons from './AuthorButtons';
 
+const fetchPost = async (postId) => {
+    const response = await fetch(`${fetchURL}/post/${postId}`);
+    const result = await response.json();
+    return {
+        ...result.post,
+        parsedContent: draftToHtml(JSON.parse(result.post.content)),
+    };
+};
+
+const fetchComments = async (postId) => {
+    const response = await fetch(`${fetchURL}/comment/${postId}`);
+    return response.json();
+};
+
 function LargePost() {
-    const [title, setTitle] = useState('');
-    const [postContent, setPostContent] = useState(null);
-    const [commentList, setCommentList] = useState(null);
-    const [postAuthor, setPostAuthor] = useState(null);
-    const [dataFetched, setDataFetched] = useState(false);
     const theme = useTheme();
     const isDarkMode = theme.palette.mode === 'dark';
     const authToken = localStorage.getItem('auth_token');
-    let tokenInformation = '';
-    const [commentReRender, setCommentReRender] = useState(0);
-    if (authToken) {
-        tokenInformation = parseJwt(authToken);
-    }
+    const tokenInformation = authToken ? parseJwt(authToken) : null;
 
     const location = useLocation();
-    const pathnameParts = location.pathname.split('/');
-    const postId = pathnameParts[pathnameParts.length - 1];
+    const postId = location.pathname.split('/').pop();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`${fetchURL}/post/${postId}`);
-                const result = await response.json();
-                const commentlistResponse = await fetch(
-                    `${fetchURL}/comment/${postId}`
-                );
-                const commentlistJSON = await commentlistResponse.json();
+    const { data: post, isLoading: postLoading } = useQuery({
+        queryKey: ['post', postId],
+        queryFn: () => fetchPost(postId),
+    });
 
-                const parsedJson = await JSON.parse(result.post.content);
+    const { data: commentList, isLoading: commentsLoading } = useQuery({
+        queryKey: ['comments', postId],
+        queryFn: () => fetchComments(postId),
+    });
 
-                setPostAuthor(result.post.author);
-                setTitle(result.post.title);
-                const modifiedContent = draftToHtml(parsedJson);
-                setPostContent(modifiedContent);
-                setDataFetched(true);
-                setCommentList(commentlistJSON);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        fetchData(); // Call the fetchData function
-    }, [commentReRender, postId]);
     return (
         <div>
             <Navbar />
             <div className="postpage-wrapper">
                 <div className="largepost-outer-wrapper">
-                    {postContent === null ? (
+                    {postLoading ? (
                         <p>Loading post...</p>
                     ) : (
                         <div className="largepost-post">
-                            <h1>{title}</h1>
+                            <h1>{post.title}</h1>
                             <div
                                 className="largepost-wrapper"
                                 dangerouslySetInnerHTML={{
-                                    __html: postContent,
+                                    __html: post.parsedContent,
                                 }}
                             />
                         </div>
                     )}
                 </div>
                 <div>
-                    {dataFetched && (
+                    {post && tokenInformation && (
                         <AuthorButtons
                             postId={postId}
                             currentUser={tokenInformation.id}
-                            postAuthor={postAuthor}
+                            postAuthor={post.author}
                         />
                     )}
                 </div>
                 <div className="comment-box-wrapper">
-                    {commentList ? (
-                        commentList.length > 0 ? (
-                            commentList.map((item, index) => (
-                                <div key={index} className="comment-box-content">
-                                    <div key={item._id} className="comment-box">
-                                        <h4 className="comment-header">
-                                            {item.author.username}
-                                        </h4>
-                                        <p className="comment-content">
-                                            {item.commentContent}
-                                        </p>
-                                        <p>{item.createdAtFormatted}</p>
-                                    </div>
-                                </div>
-                            ))
-                        ) : (
-                            <Typography
-                                variant="h6"
-                                sx={{
-                                    color: isDarkMode ? '#fff' : '#fff',
-                                    textAlign: 'center',
-                                    backgroundColor: '#333',
-                                    width: '100%',
-                                    paddingTop: '5px',
-                                    paddingBottom: '5px',
-                                }}>
-                                Comments
-                            </Typography>
-                        )
-                    ) : (
+                    {commentsLoading ? (
                         <p>Loading comments...</p>
+                    ) : commentList?.length > 0 ? (
+                        commentList.map((item) => (
+                            <div key={item._id} className="comment-box-content">
+                                <div className="comment-box">
+                                    <h4 className="comment-header">
+                                        {item.author.username}
+                                    </h4>
+                                    <p className="comment-content">
+                                        {item.commentContent}
+                                    </p>
+                                    <p>{item.createdAtFormatted}</p>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                color: isDarkMode ? '#fff' : '#fff',
+                                textAlign: 'center',
+                                backgroundColor: '#333',
+                                width: '100%',
+                                paddingTop: '5px',
+                                paddingBottom: '5px',
+                            }}>
+                            No Comments Yet
+                        </Typography>
                     )}
                 </div>
-                {tokenInformation && (
-                    <CreateComment
-                        commentReRender={commentReRender}
-                        setCommentReRender={setCommentReRender}
-                    />
-                )}
+                {tokenInformation && <CreateComment postId={postId} />}
             </div>
         </div>
     );

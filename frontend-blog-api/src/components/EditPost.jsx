@@ -6,6 +6,7 @@ import EditorComponent from './EditorComponent';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import '../styles/createpost.css';
 import { fetchURL } from '../constants/fetchURL';
+import '../styles/editpost.css';
 
 import parseJwt from '../utils/parseJwt';
 
@@ -13,7 +14,7 @@ function EditPost() {
     const [editorState, setEditorState] = useState();
     // const [errorArray, setErrorArray] = useState([]);
     const [title, setTitle] = useState('');
-    setTitle(title);
+    //setTitle(title);
 
     let tokenInformation = '';
     const authToken = localStorage.getItem('auth_token');
@@ -39,7 +40,7 @@ function EditPost() {
                 const contentState = convertFromRaw(
                     JSON.parse(data.post.content)
                 );
-
+                setTitle(data.post.title);
                 setEditorState(EditorState.createWithContent(contentState));
 
                 // Handle fetched data
@@ -49,7 +50,7 @@ function EditPost() {
         };
 
         fetchData();
-    }, );
+    }, []);
 
     function fetchPostUpdate(event) {
         event.preventDefault();
@@ -102,7 +103,10 @@ function EditPost() {
                                 onSubmit={fetchPostUpdate}>
                                 <br />
                                 <div>
-                                    <label>Text</label>
+                                    <div className="title-div">
+                                        <h1>{title}</h1>
+                                    </div>
+
                                     <EditorComponent
                                         editorState={editorState}
                                         setEditorState={setEditorState}
