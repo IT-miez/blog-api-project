@@ -1,109 +1,97 @@
-import '../styles/createcomment.css';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import parseJwt from '../utils/parseJwt';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchURL } from '../constants/fetchURL';
+import parseJwt from '../utils/parseJwt';
 import { Typography } from '@mui/material';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../styles/createcomment.css';
 
-function CreateComment({ commentReRender, setCommentReRender }) {
-    const { postid } = useParams();
+function CreateComment({ postId }) {
     const [commentData, setCommentData] = useState('');
+    const queryClient = useQueryClient();
     const authToken = localStorage.getItem('auth_token');
     const tokenInformation = parseJwt(authToken);
 
+    const mutation = useMutation({
+        mutationFn: async (newComment) => {
+            const response = await fetch(`${fetchURL}/comment/create`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${authToken}`,
+                },
+                body: JSON.stringify(newComment),
+            });
+            if (!response.ok) {
+                throw new Error('Failed to add comment');
+            }
+            return response.json();
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['comments', postId] });
+            setCommentData('');
+            toast.success('Comment added successfully!', {
+                position: 'bottom-right',
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                theme: 'dark',
+            });
+        },
+        onError: () => {
+            toast.error('Failed to add comment. Please try again.', {
+                position: 'bottom-right',
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                theme: 'dark',
+            });
+        },
+    });
+
     function sendComment(event) {
         event.preventDefault();
-
-        fetch(`${fetchURL}/comment/create`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${authToken}`,
-            },
-            body: JSON.stringify({
-                author: tokenInformation.id,
-                post: postid,
-                comment: commentData,
-            }),
-        })
-            .then((response) => {
-                if (response.status === 200) {
-                    setCommentReRender(commentReRender + 1);
-                    setCommentData('');
-                    toast.success('Comment added successfully!', {
-                        position: 'bottom-right',
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: false,
-                        theme: 'dark',
-                    });
-                } else {
-                    return response.json().then((data) => {
-                        console.log(data);
-                        toast.error(
-                            'Failed to add comment. Please try again.',
-                            {
-                                position: 'bottom-right',
-                                autoClose: 3000,
-                                hideProgressBar: false,
-                                closeOnClick: true,
-                                pauseOnHover: true,
-                                draggable: false,
-                                theme: 'dark',
-                            }
-                        );
-                    });
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-                toast.error('An error occurred. Please try again later.', {
-                    position: 'bottom-right',
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: false,
-                    theme: 'dark',
-                });
-            });
+        mutation.mutate({
+            author: tokenInformation.id,
+            post: postId,
+            comment: commentData,
+        });
     }
 
     return (
         <div className="comment-container">
-            <div>
-                <form className="comment-form" onSubmit={sendComment}>
-                    <div>
-                        <Typography
-                            variant="h7"
-                            sx={{
-                                color: '#fff',
-                                textAlign: 'center',
-                                width: '100%',
-                            }}>
-                            Add a comment
-                        </Typography>
-                        <br />
-                        <textarea
-                            type="text"
-                            name="comment"
-                            id="comment"
-                            maxLength={420}
-                            required
-                            value={commentData}
-                            onChange={(event) =>
-                                setCommentData(event.target.value)
-                            }
-                        />
-                    </div>
-                    <br />
-                    <input type="submit" className="submit-button" />
-                </form>
-            </div>
+            <form className="comment-form" onSubmit={sendComment}>
+                <Typography
+                    variant="h7"
+                    sx={{
+                        color: '#fff',
+                        textAlign: 'center',
+                        width: '100%',
+                    }}>
+                    Add a comment
+                </Typography>
+                <br />
+                <textarea
+                    type="text"
+                    name="comment"
+                    id="comment"
+                    maxLength={420}
+                    required
+                    value={commentData}
+                    onChange={(event) => setCommentData(event.target.value)}
+                />
+                <br />
+                <input
+                    type="submit"
+                    className="submit-button"
+                    disabled={mutation.isLoading}
+                />
+            </form>
             <ToastContainer />
         </div>
     );

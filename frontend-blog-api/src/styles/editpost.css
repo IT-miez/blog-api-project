@@ -41,3 +41,14 @@
     cursor: pointer;
     border-radius: 15px;
 }
+
+
+.title-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: inherit;
+    background-color: #4b4a4a;
+    margin-top: 50px;
+    padding: 20px;
+}
