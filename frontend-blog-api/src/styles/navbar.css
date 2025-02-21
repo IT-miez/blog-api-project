@@ -60,15 +60,13 @@
     display: flex;
     justify-content: flex-end;
     right: 0;
-    position: absolute;
 }
 
 .buttons-left {
     display: flex;
     flex: 1;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
+    justify-content: start;
+    align-items: start;
     left: 0;
 }
 
@@ -88,4 +86,36 @@ a {
     padding-bottom: 20px;
 
     background-color: #39853b;
+}
+
+
+@media (max-width: 769px) {
+    .navbar {
+        flex-direction: column;
+        height: fit-content;
+    }
+
+    .buttons-left {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+
+    #blogsite-button {
+        font-size: 1rem;
+    }
+
+    .profile-button {
+        font-size: 1rem;
+    }
+
+    .buttons {
+        padding: 5px;
+        font-size: 1rem;
+    }
+
+    .container {
+        flex-direction: column;
+    }
 }

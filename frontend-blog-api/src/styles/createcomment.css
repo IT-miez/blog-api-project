@@ -45,3 +45,12 @@ textarea {
     height: 100px;
     padding: 5px;
 }
+
+.comment-form textarea {
+    width: 100%;  /* Make it fully responsive to the parent */
+    max-width: 100%;  /* Prevent overflow */
+    height: 100px;  /* Keep the height fixed or adjust as needed */
+    padding: 10px;  /* Add padding for better spacing */
+    resize: vertical;  /* Allow resizing only vertically */
+    box-sizing: border-box;  /* Ensure padding doesn't affect width */
+}
