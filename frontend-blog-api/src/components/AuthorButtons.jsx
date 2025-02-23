@@ -29,7 +29,6 @@ function AuthorButtons({ postId, currentUser, postAuthor }) {
                     // Deletion successful
                     setConfirmed(true);
                     navigate('/');
-                    // Redirect to the desired route (e.g., '/')
                 }
             } catch (error) {
                 console.error('Error deleting post:', error);
