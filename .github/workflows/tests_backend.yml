@@ -3,8 +3,10 @@ name: Unit-test pipeline
 on:
     push:
         branches:
-            - main
-
+            - '**'
+    pull_request:
+      branches:
+        - main
 env:
     SECRET: ${{ secrets.SECRET }}
 
