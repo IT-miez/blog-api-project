@@ -1,8 +1,4 @@
-/*
-:root {
-    color-scheme: dark;
-}
-*/
+
 
 .shortpost-master {
     display: flex;
@@ -28,13 +24,11 @@
     background-color: light-dark(
         white,
         #5f5f5f
-    ); /* Replace with your desired slightly darker gray color */
-    /* border-radius: 10px; /* Adjust the value to control the roundness of the corners */
+    );
     box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.7);
-    padding: 10px; /* Adjust the value to set the padding */
+    padding: 10px;
 
     width: 98%;
-    /*max-width: 600px; */
 }
 
 .shortpost-right {

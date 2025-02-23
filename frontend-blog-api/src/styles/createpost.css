@@ -1,9 +1,4 @@
-/* Login.css*/
-/*
-:root {
-    color-scheme: dark;
-}
-*/
+
 
 .createpost-container {
     display: flex;
@@ -20,16 +15,6 @@
     justify-content: space-between;
     gap: 20px;
 }
-
-/*
-.buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-*/
 
 .submit-button {
     font-size: 1rem;

@@ -1,8 +1,4 @@
-/*
-:root {
-    color-scheme: dark;
-}
-*/
+
 
 .username-hello {
     font-size: 0.8rem;
@@ -42,18 +38,6 @@
     padding: 10px 20px;
     background-color: #1a1a1a;
 }
-
-/* Centering */
-/*
-.blogsite-centered {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  margin: 0 auto;
-  z-index: 1;
-}
-  */
 
 .buttons-right {
     flex: 1;

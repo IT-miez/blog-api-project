@@ -17,18 +17,15 @@ export function PostsList() {
                                     <p className="title-text">
                                         <Skeleton height={28} width={200} />
                                     </p>{' '}
-                                    {/* Simulating title */}
                                     <p className="author-text">
                                         <Skeleton height={18} width={150} />
                                     </p>{' '}
-                                    {/* Simulating author */}
                                 </div>
                             </div>
                             <div className="shortpost-right">
                                 <p className="date-text">
                                     <Skeleton height={18} width={100} />
                                 </p>{' '}
-                                {/* Simulating date */}
                             </div>
                         </div>
                     </div>
