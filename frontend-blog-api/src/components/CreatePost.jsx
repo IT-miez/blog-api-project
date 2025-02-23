@@ -57,22 +57,19 @@ function CreatePost() {
                         <Box
                             sx={{
                                 padding: 2,
-                                backgroundColor: isDarkMode
-                                    ? '#222'
-                                    : '#e0e0e0', // Lighter background for light mode
-                                borderRadius: 1,
-                                width: '95%',
+                                backgroundColor: '#333',
+                                width: '100%',
+                                boxSizing: 'border-box',
                             }}>
                             <Typography
                                 variant="h4"
                                 sx={{
-                                    color: isDarkMode ? '#fff' : '#000', // Explicit color setting
+                                    color: 'white',
                                     textAlign: 'center',
                                 }}>
                                 Create Post
                             </Typography>
                         </Box>
-                        <hr />
                         <div>
                             <form
                                 className="login-information"
