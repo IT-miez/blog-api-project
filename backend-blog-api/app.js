@@ -4,7 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
-
+const helmet = require('helmet');
 const passport = require('passport');
 require('dotenv').config();
 
@@ -40,7 +40,7 @@ async function main(mongoDB) {
 if (process.env.NODE_ENV !== 'Test') {
     const prodDB = process.env.productionDatabase;
     const mongoDB = process.env.MONGODB_URI || prodDB;
-     
+
     main(mongoDB).catch((err) => console.log(err));
     // MongoDB SETUP DONE
 }
@@ -53,6 +53,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', allRoutesRouter); // Add all routes
 
 app.use(cors());
+
+app.use(helmet());
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -67,7 +69,7 @@ app.use((err, req, res) => {
 
     // render the error page
     res.status(err.status || 500);
-     
+
     console.error(err);
     res.json(err.message);
 });
