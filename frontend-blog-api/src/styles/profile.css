@@ -60,3 +60,33 @@
     display: flex;
     gap: 20px;
 }
+
+
+
+@media (max-width: 769px) {
+    .profile-container {
+        max-width: inherit;
+        flex-direction: column;
+        height: fit-content;
+        gap: 20px;
+    }
+
+    .profile-bio-container {
+        width: inherit;
+        min-width: 200px;
+    }
+
+    .profile-inner-container {
+        width: inherit;
+        min-width: 200px;
+        position: relative;
+    }
+
+    .profile-inner-container-creationdate {
+        justify-content: flex-start;
+        align-items: center;
+        width: inherit;
+    }
+
+
+}
